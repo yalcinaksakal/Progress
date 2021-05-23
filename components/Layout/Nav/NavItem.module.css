@@ -1,7 +1,7 @@
 .item {
   margin-left: 1rem;
   color: black;
-  transition: color ease-out 0.2s;
+  cursor: pointer;
 }
 
 .item:hover,

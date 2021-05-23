@@ -114,11 +114,13 @@ const AuthGoogle = () => {
           className="fab fa-google"
           style={{
             background: "transparent",
-            color: "#4c8bf5",
-            marginLeft: "5px",
+            display: "flex",
+            alignItems: "center",
           }}
         >
-          Sign in/up
+          <span style={{ marginLeft: "3px", fontSize: "10px" }}>
+            Sign in/up
+          </span>
         </i>
       )}
       clientId="736076693286-m98km6smat5d0rb7q58fi19ae9os0trp.apps.googleusercontent.com"

@@ -5,6 +5,11 @@ const AUTO_LOGOUT_TIME_IN_SECONDS = 120;
 
 const NAV_ITEMS = [
   {
+    name: "Categories",
+    icon: <i className="fas fa-ellipsis-h"></i>,
+    isAuthNeeded: false,
+  },
+  {
     name: "Cart",
     icon: <i className="fas fa-shopping-cart"></i>,
     isAuthNeeded: false,
@@ -20,7 +25,7 @@ const NAV_ITEMS = [
     isAuthNeeded: true,
   },
   {
-    name: "Sign out",
+    name: "Logout",
     icon: <i className="fas fa-sign-out-alt"></i>,
     isAuthNeeded: true,
   },

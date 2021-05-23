@@ -1,12 +1,18 @@
 import Link from "next/link";
-
+import { useState } from "react";
+import NavItemDetails from "./NavItemDetails";
 import { NAV_ITEMS } from "../../../config/config";
-
-import AuthGoogle from "../../Auth/AuthGoogle";
 import NavItem from "./NavItem";
 import styles from "./NavList.module.css";
+import AuthGoogle from "../../Auth/AuthGoogle";
 
 const Navlist = () => {
+  const [showDetails, setShowDetails] = useState(false);
+  const [name, setName] = useState("");
+  const hoverHandler = (show, navItemName = "") => {
+    setShowDetails(show);
+    setName(navItemName);
+  };
   return (
     <header className={styles.header}>
       <Link href="/">
@@ -15,19 +21,14 @@ const Navlist = () => {
       <nav>
         <ul>
           {NAV_ITEMS.map(item => (
-            <NavItem key={item.name} {...item} />
+            <NavItem key={item.name} {...item} onHover={hoverHandler} />
           ))}
-          {/* <li className={router.pathname === "/profile" ? styles.active : ""}>
-            <Link href="/profile">Profile</Link>
-          </li>
-          <li>
-            <span>Logout</span>
-          </li>
-          <li>
+          <li className={styles.login}>
             <AuthGoogle />
-          </li> */}
+          </li>
         </ul>
       </nav>
+      {showDetails && <NavItemDetails show name={name} />}
     </header>
   );
 };
