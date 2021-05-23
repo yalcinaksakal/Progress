@@ -1,9 +1,9 @@
-import MainNavigation from "./MainNavigation";
+import NavList from "./Nav/NavList";
 
 const Layout = props => {
   return (
     <>
-      <MainNavigation />
+      <NavList />
       <main>{props.children}</main>
     </>
   );

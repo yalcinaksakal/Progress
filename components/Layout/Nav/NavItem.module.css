@@ -1,0 +1,10 @@
+.item {
+  margin-left: 1rem;
+  color: black;
+  transition: color ease-out 0.2s;
+}
+
+.item:hover,
+.item.active {
+  color: dodgerblue;
+}
