@@ -18,7 +18,7 @@
 .container {
   display: flex;
   justify-content: center;
-  transform: scale(0.5);
+  transform: scale(0.3);
 }
 .ldio div {
   position: absolute;
@@ -29,11 +29,11 @@
   animation: ldio 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
 }
 .ldio div:nth-child(1) {
-  border-color: rgb(251, 255, 30);
+  border-color: lime;
   animation-delay: 0s;
 }
 .ldio div:nth-child(2) {
-  border-color: #adb019;
+  border-color: limegreen;
   animation-delay: -0.5s;
 }
 .loadingio {

@@ -30,6 +30,7 @@
 .login {
   cursor: pointer;
 }
+.logo:hover,
 .login:hover {
   color: dodgerblue;
 }
