@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import Link from "next/link";
 import styles from "./NavItem.module.css";
-import AuthGoogle from "../../Auth/AuthGoogle";
+
 
 const NavItem = props => {
   const router = useRouter();

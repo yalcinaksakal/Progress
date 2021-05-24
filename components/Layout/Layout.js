@@ -1,27 +1,34 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { authActions } from "../../store/auth-slice";
+import { loginActions } from "../../store/auth/google-slice";
 import Backdrop from "../../UI/BackDrop/Backdrop";
 import Modal from "../../UI/Modal/Modal";
 import NavList from "./Nav/NavList";
 
 const Layout = props => {
-  const { loggingIn } = useSelector(state => state.auth);
+  const { isLogin, status } = useSelector(state => state.login);
   const dispatch = useDispatch();
+
+  const cancelLoginHandler = useCallback(() => {
+    dispatch(loginActions.setState({ isLogin: false, status: "" }));
+  }, [dispatch]);
+
   useEffect(() => {
-    if (loggingIn !== "Signing in/up") {
-      setTimeout(() => dispatch(authActions.setLoggingIn("")), 3000);
+    let timeout;
+    if (isLogin && status !== "Signing in/up") {
+      timeout = setTimeout(() => cancelLoginHandler(), 3000);
     }
-  }, [loggingIn, dispatch]);
+    return () => clearTimeout(timeout);
+  }, [isLogin, status, dispatch, cancelLoginHandler]);
 
   return (
     <>
       <NavList />
       <main>{props.children}</main>
-      {loggingIn && (
+      {isLogin && (
         <>
           <Backdrop />
-          <Modal text={loggingIn} />
+          <Modal text={status} clicked={cancelLoginHandler} />
         </>
       )}
     </>

@@ -14,9 +14,8 @@ const useFetch = () => {
       });
 
       const fetchedData = await response.json();
-      console.log(response, fetchedData);
-      if (!response.ok) throw new Error(
-        "Authentication Failed");
+      
+      if (!response.ok) throw new Error("Authentication Failed");
       setIsLoading(false);
 
       if (credentials.type === "login") {
@@ -25,7 +24,7 @@ const useFetch = () => {
         const expirationTime = new Date(
           new Date().getTime() + 120 * 1000
         ).toISOString();
-        return { ok: true, idToken: fetchedData.idToken, expirationTime };
+        return { ok: true, ...fetchedData };
       }
       return { ok: true, result: fetchedData.message };
     } catch (error) {

@@ -1,9 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { calculateRemainingTime, retriveStoredToken } from "../lib/helper";
+import { calculateRemainingTime, retriveStoredToken } from "../../lib/helper";
 
 const initialState = {
   isLoggedIn: false,
-  loggingIn: "",
   token: null,
   remainingTime: 0,
   userName: null,
@@ -42,9 +41,7 @@ const authSlice = createSlice({
       state.loginType = null;
       localStorage.removeItem("token");
     },
-    setLoggingIn(state, action) {
-      state.loggingIn = action.payload;
-    },
+
     // remainingTimeHandler(state) {
     //   state.remainingTime--;
     // },

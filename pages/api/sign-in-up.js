@@ -10,6 +10,20 @@ async function verify(token) {
       audience: CLIENT_ID,
     });
     const payload = ticket.getPayload();
+    return { isFailed: false, result: payload };
+  } catch (err) {
+    return {
+      isFailed: true,
+      result: "Invalid token.",
+    };
+  }
+}
+
+async function checkIsUser(email) {
+  try {
+
+    });
+    const payload = ticket.getPayload();
     // const userid = payload["sub"];
     // // If request specified a G Suite domain:
     // // const domain = payload['hd'];
@@ -21,16 +35,22 @@ async function verify(token) {
     };
   }
 }
+
 async function handler(req, res) {
   if (req.method === "POST") {
     const { type, token } = req.body;
-    const { result, isFailed } = await verify(token + "12");
+    const { result, isFailed } = await verify(token);
 
     if (isFailed) {
       res.status(401).json({ error: "Unauthorized", message: "Invalid token" });
       return;
     }
-    console.log("ok");
+    console.log(result);
+    if (type === "login") {
+      const isUser = await checkIsUser(result.email);
+    }
+    console.log("type:", type);
+    res.status(200).json(result);
   }
 }
 

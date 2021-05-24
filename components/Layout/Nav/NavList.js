@@ -4,7 +4,7 @@ import NavItemDetails from "./NavItemDetails";
 import { NAV_ITEMS } from "../../../config/config";
 import NavItem from "./NavItem";
 import styles from "./NavList.module.css";
-import AuthGoogle from "../../Auth/AuthGoogle";
+import Auth from "../../Auth/Auth";
 import Image from "next/image";
 const Navlist = () => {
   const [showDetails, setShowDetails] = useState(false);
@@ -26,7 +26,7 @@ const Navlist = () => {
             <NavItem key={item.name} {...item} onHover={hoverHandler} />
           ))}
           <li className={styles.login}>
-            <AuthGoogle />
+            <Auth />
           </li>
         </ul>
       </nav>
