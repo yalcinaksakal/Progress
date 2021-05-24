@@ -15,7 +15,6 @@ function AuthApp({ Component, pageProps }) {
     router.events.on("routeChangeStart", start);
     router.events.on("routeChangeComplete", end);
     router.events.on("routeChangeError", end);
-
     return () => {
       router.events.off("routeChangeStart", start);
       router.events.off("routeChangeComplete", end);

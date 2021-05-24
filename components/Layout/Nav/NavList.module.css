@@ -13,6 +13,7 @@
 .logo {
   font-size: 1.2rem;
   cursor: pointer;
+  transition: all ease-out 0.2s;
 }
 
 .header ul {
@@ -29,10 +30,14 @@
 }
 .login {
   cursor: pointer;
+  transition: all ease-out 0.2s;
 }
 .logo:hover,
 .login:hover {
   color: dodgerblue;
+}
+.login:hover {
+  transform: scale(1.1);
 }
 @media (max-width: 400px) {
   .header {
