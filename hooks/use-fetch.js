@@ -5,10 +5,9 @@ const useFetch = () => {
   const sendRequest = useCallback(async credentials => {
     setIsLoading(true);
     try {
-      const response = await fetch("/api/sign-in", {
+      const response = await fetch("/api/sign-in-up", {
         method: "POST",
         body: JSON.stringify({
-          returnSecureToken: true,
           ...credentials,
         }),
         headers: { "Content-Type": "application/json" },
@@ -24,7 +23,7 @@ const useFetch = () => {
         );
       setIsLoading(false);
 
-      if (credentials.isLogin) {
+      if (credentials.type === "login") {
         const expiresIn = +fetchedData.expiresIn;
         //fix 120 seconds to logout, if u want logout according to Firebase expiresIn time, use it instead of 120 below
         const expirationTime = new Date(

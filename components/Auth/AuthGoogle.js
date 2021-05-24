@@ -1,34 +1,23 @@
-import { useRef, useState } from "react";
-import { useRouter } from "next/router";
+import { useState } from "react";
 
-// import classes from "./AuthForm.module.css";
 import useFetch from "../../hooks/use-fetch";
 import { useDispatch } from "react-redux";
 import { authActions } from "../../store/auth-slice";
-import { setLogoutTimer } from "../../store/auth-actions";
-import { calculateRemainingTime } from "../../lib/helper";
+// import { setLogoutTimer } from "../../store/auth-actions";
+// import { calculateRemainingTime } from "../../lib/helper";
 import GoogleLogin from "react-google-login";
+import { CLIENT_ID } from "../../config/config";
 
 const AuthGoogle = () => {
   const { isLoading, sendRequest: fetchLoginData } = useFetch();
-  const [error, setError] = useState(false);
-  const [isLogin, setIsLogin] = useState(true);
-  const [successMsg, setSuccessMsg] = useState(null);
-  const [showPwd, setShowPwd] = useState(false);
-  const emailRef = useRef();
-  const pwdRef = useRef();
-  const dispatch = useDispatch();
-  const router = useRouter();
 
-  const showPwdHandler = () => {
-    setShowPwd(prevState => !prevState);
-  };
+  const dispatch = useDispatch();
 
   const loginHandler = (
     token,
     expirationTime,
     userName,
-    loginType = "user"
+    loginType = "google"
   ) => {
     dispatch(
       authActions.login({
@@ -38,67 +27,33 @@ const AuthGoogle = () => {
         loginType,
       })
     );
-    dispatch(setLogoutTimer(calculateRemainingTime(expirationTime)));
-    router.replace("/");
+    // dispatch(setLogoutTimer(calculateRemainingTime(expirationTime)));
   };
 
-  const responseGoogle = response => {
+  const responseGoogle = async response => {
     if (response.error) {
       // setError("Authentication failed");
-      console.log(response);
-      setError(response.error.replace(/_/g, " "));
+      // console.log(response);
+      // setError(response.error.replace(/_/g, " "));
       return;
     }
-    // https://auth-next-rose.vercel.app
-
+    const loginData = await fetchLoginData({
+      token: response.tokenObj.id_token,
+      type: "login",
+    });
+    console.log(response);
     const expiresIn = +response.tokenObj.expires_in;
     //fix 120 seconds to logout, if u want logout according to Firebase expiresIn time, use it instead of 120 below
     const expirationTime = new Date(
       new Date().getTime() + 120 * 1000
     ).toISOString();
+
     loginHandler(
-      response.tokenId,
+      response.tokenObj,
       expirationTime,
       response.profileObj.name,
+      response.profileObj.imageUrl,
       "google"
-    );
-  };
-
-  const switchAuthModeHandler = () => {
-    setIsLogin(prevState => !prevState);
-    setError(false);
-    emailRef.current.value = "";
-    pwdRef.current.value = "";
-    setShowPwd(false);
-  };
-
-  const submitHandler = async event => {
-    event.preventDefault();
-    setError(false);
-    const enteredEmail = emailRef.current.value;
-    const enteredPwd = pwdRef.current.value;
-    const loginData = await fetchLoginData({
-      email: enteredEmail,
-      password: enteredPwd,
-      isLogin,
-    });
-    if (!loginData.ok) {
-      setError(loginData.error);
-      return;
-    }
-    if (!isLogin) {
-      setSuccessMsg(loginData.result);
-      setTimeout(() => {
-        setSuccessMsg(null);
-        setIsLogin(true);
-      }, 2000);
-      return;
-    }
-
-    loginHandler(
-      loginData.idToken,
-      loginData.expirationTime,
-      enteredEmail.split("@")[0]
     );
   };
 
@@ -108,7 +63,7 @@ const AuthGoogle = () => {
         <i
           // className={classes.gbutton}
           onClick={() => {
-            setError(false);
+            // setError(false);
             renderProps.onClick();
           }}
           className="fab fa-google"
@@ -123,7 +78,7 @@ const AuthGoogle = () => {
           </span>
         </i>
       )}
-      clientId="736076693286-m98km6smat5d0rb7q58fi19ae9os0trp.apps.googleusercontent.com"
+      clientId={CLIENT_ID}
       buttonText="Login"
       onSuccess={responseGoogle}
       onFailure={responseGoogle}
