@@ -30,7 +30,7 @@ function AuthApp({ Component, pageProps }) {
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css"
         />
-        <link rel="icon" href="/logo.png" />
+        <link rel="icon" href="/p2.png" />
         <meta
           name="description"
           content="Progress platform - Online learning, meeting, therapy, coaching platform. "
