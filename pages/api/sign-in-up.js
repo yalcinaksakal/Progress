@@ -1,6 +1,6 @@
 import { OAuth2Client } from "google-auth-library";
 import { CLIENT_ID } from "../../config/config";
-
+import { MongoClient, ObjectId } from "mongodb";
 const client = new OAuth2Client(CLIENT_ID);
 
 async function verify(token) {
@@ -21,18 +21,17 @@ async function verify(token) {
 
 async function checkIsUser(email) {
   try {
+    const client = await MongoClient.connect(
+      "mongodb+srv://ya:qwe123zx@cluster0.kxotm.mongodb.net/meetups?retryWrites=true&w=majority"
+    );
+    const db = client.db();
+    const progressCollection = db.collection("progress");
 
-    });
-    const payload = ticket.getPayload();
-    // const userid = payload["sub"];
-    // // If request specified a G Suite domain:
-    // // const domain = payload['hd'];
-    return { isFailed: false, result: payload };
+    const user = await progressCollection.findOne({ email: email });
+
+    return { ok: true, isUser: !!user };
   } catch (err) {
-    return {
-      isFailed: true,
-      result: "Invalid token.",
-    };
+    return { ok: false, error: err.message };
   }
 }
 
@@ -42,15 +41,26 @@ async function handler(req, res) {
     const { result, isFailed } = await verify(token);
 
     if (isFailed) {
-      res.status(401).json({ error: "Unauthorized", message: "Invalid token" });
+      res.status(401).json({ error: "Invalid token", message: "Login Failed" });
       return;
     }
-    console.log(result);
+
     if (type === "login") {
-      const isUser = await checkIsUser(result.email);
+      const userStatus = await checkIsUser(result.email);
+      if (!userStatus.ok) {
+        res.status(401).json({
+          error: "DB error",
+          message: "Something went wrong. Please try again",
+        });
+        return;
+      }
+      if (!userStatus.isUser) {
+        res.status(200).json({ auth: true, isUser: false });
+        return;
+      }
     }
-    console.log("type:", type);
-    res.status(200).json(result);
+
+    res.status(200).json({ ...result, isUser: true });
   }
 }
 

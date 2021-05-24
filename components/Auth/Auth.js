@@ -24,8 +24,8 @@ const Auth = () => {
     );
     // dispatch(setLogoutTimer(calculateRemainingTime(expirationTime)));
   };
-  const loginFailHandler = () => {
-    dispatch(loginActions.setState({ isLogin: true, status: "Login failed" }));
+  const loginFailHandler = (msg = "Login failed") => {
+    dispatch(loginActions.setState({ isLogin: true, status: msg }));
   };
   const loginStartHandler = () => {
     dispatch(loginActions.setState({ isLogin: true, status: "Signing in/up" }));
@@ -43,17 +43,21 @@ const Auth = () => {
       token: response.tokenObj.id_token,
       type: "login",
     });
+    
     if (!loginData.ok) {
-      loginFailHandler();
+      loginFailHandler(loginData.error);
       return;
     }
+    if(!loginData.isUser){
+      
+    }
 
-    dispatch(
-      loginActions.setState({
-        isLogin: true,
-        status: `Welcome ${loginData.given_name.toUpperCase()}`,
-      })
-    );
+    // dispatch(
+    //   loginActions.setState({
+    //     isLogin: true,
+    //     status: `Welcome ${loginData.given_name.toUpperCase()}`,
+    //   })
+    // );
 
     // const expiresIn = +response.tokenObj.expires_in;
     // //fix 120 seconds to logout, if u want logout according to Firebase expiresIn time, use it instead of 120 below

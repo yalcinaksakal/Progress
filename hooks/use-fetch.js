@@ -14,8 +14,10 @@ const useFetch = () => {
       });
 
       const fetchedData = await response.json();
-      
-      if (!response.ok) throw new Error("Authentication Failed");
+
+      if (!response.ok) {
+        throw new Error(fetchedData.message);
+      }
       setIsLoading(false);
 
       if (credentials.type === "login") {
