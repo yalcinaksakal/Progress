@@ -55,7 +55,9 @@ async function handler(req, res) {
         return;
       }
       if (!userStatus.isUser) {
-        res.status(200).json({ auth: true, isUser: false });
+        res
+          .status(200)
+          .json({ auth: true, isUser: false, given_name: result.given_name });
         return;
       }
     }

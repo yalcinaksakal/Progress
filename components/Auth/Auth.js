@@ -24,8 +24,8 @@ const Auth = () => {
     );
     // dispatch(setLogoutTimer(calculateRemainingTime(expirationTime)));
   };
-  const loginFailHandler = (msg = "Login failed") => {
-    dispatch(loginActions.setState({ isLogin: true, status: msg }));
+  const loginFailHandler = () => {
+    dispatch(loginActions.setState({ isLogin: true, status: "Login failed" }));
   };
   const loginStartHandler = () => {
     dispatch(loginActions.setState({ isLogin: true, status: "Signing in/up" }));
@@ -43,13 +43,19 @@ const Auth = () => {
       token: response.tokenObj.id_token,
       type: "login",
     });
-    
+
     if (!loginData.ok) {
       loginFailHandler(loginData.error);
       return;
     }
-    if(!loginData.isUser){
-      
+    if (!loginData.isUser) {
+      console.log(loginData);
+      dispatch(
+        loginActions.setState({
+          isLogin: true,
+          status: `Hi ${loginData.given_name.toUpperCase()}. Please confirm and sign up to Progress.`,
+        })
+      );
     }
 
     // dispatch(

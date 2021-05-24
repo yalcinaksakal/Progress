@@ -14,20 +14,45 @@
 
   animation: openModal 0.4s ease-out forwards;
 }
+
+.buttonsDiv {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
 .Button {
   outline: none;
   border: none;
-  border: 1px solid dodgerblue;
+  border: 1px solid red;
   background: white;
   border-radius: 5px;
-  color: dodgerblue;
+  color: red;
   font-size: 1rem;
   padding: 0.1rem 0.5rem;
 }
+.Confirm {
+  outline: none;
+  border: none;
+  border: 1px solid limegreen;
+  background: limegreen;
+  border-radius: 5px;
+  color: white;
+  font-size: 1rem;
+  padding: 0.5rem;
+  transition: all ease-out 0.2s;
+}
+
 .Button:hover {
   color: white;
-  background: dodgerblue;
+  background: red;
+  transition: all ease-out 0.2s;
 }
+.Confirm:hover {
+  transform: scale(1.1);
+}
+
 @keyframes openModal {
   0% {
     opacity: 0;
@@ -40,5 +65,20 @@
   100% {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@media (max-width: 350px) {
+  .buttonsDiv {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-end;
+  }
+  .Modal {
+    left: 10%;
+    width: 80%;
+  }
+  .Confirm {
+    margin-bottom: 20px;
   }
 }

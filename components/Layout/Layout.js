@@ -15,8 +15,8 @@ const Layout = props => {
 
   useEffect(() => {
     let timeout;
-    if (isLogin && status !== "Signing in/up") {
-      timeout = setTimeout(() => cancelLoginHandler(), 3000);
+    if (isLogin && status !== "Signing in/up" && status.slice(0, 2) !== "Hi") {
+      timeout = setTimeout(() => cancelLoginHandler(), 2000);
     }
     return () => clearTimeout(timeout);
   }, [isLogin, status, dispatch, cancelLoginHandler]);
