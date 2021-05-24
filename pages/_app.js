@@ -3,7 +3,7 @@ import Head from "next/head";
 import Layout from "../components/Layout/Layout";
 import { Provider } from "react-redux";
 import store from "../store";
-import Spinner from "../UI/Spinner";
+import Spinner from "../UI/Spinner/Spinner";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 function AuthApp({ Component, pageProps }) {

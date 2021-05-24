@@ -14,13 +14,9 @@ const useFetch = () => {
       });
 
       const fetchedData = await response.json();
-
-      if (!response.ok)
-        throw new Error(
-          fetchedData.error?.message
-            ? fetchedData.error.message
-            : "Authentication Failed"
-        );
+      console.log(response, fetchedData);
+      if (!response.ok) throw new Error(
+        "Authentication Failed");
       setIsLoading(false);
 
       if (credentials.type === "login") {

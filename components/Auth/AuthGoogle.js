@@ -9,7 +9,7 @@ import GoogleLogin from "react-google-login";
 import { CLIENT_ID } from "../../config/config";
 
 const AuthGoogle = () => {
-  const { isLoading, sendRequest: fetchLoginData } = useFetch();
+  const { sendRequest: fetchLoginData } = useFetch();
 
   const dispatch = useDispatch();
 
@@ -35,6 +35,7 @@ const AuthGoogle = () => {
       // setError("Authentication failed");
       // console.log(response);
       // setError(response.error.replace(/_/g, " "));
+      dispatch(authActions.setLoggingIn("Sign in/up failed"));
       return;
     }
     const loginData = await fetchLoginData({
@@ -55,34 +56,38 @@ const AuthGoogle = () => {
       response.profileObj.imageUrl,
       "google"
     );
+    dispatch(authActions.setLoggingIn("Wellcome"));
   };
 
   return (
-    <GoogleLogin
-      render={renderProps => (
-        <i
-          // className={classes.gbutton}
-          onClick={() => {
-            // setError(false);
-            renderProps.onClick();
-          }}
-          className="fab fa-google"
-          style={{
-            background: "transparent",
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
-          <span style={{ marginLeft: "3px", fontSize: "10px" }}>
-            Sign in/up
-          </span>
-        </i>
-      )}
-      clientId={CLIENT_ID}
-      buttonText="Login"
-      onSuccess={responseGoogle}
-      onFailure={responseGoogle}
-    />
+    <>
+      <GoogleLogin
+        render={renderProps => (
+          <i
+            // className={classes.gbutton}
+            onClick={() => {
+              // setError(false);
+              dispatch(authActions.setLoggingIn("Signing in/up"));
+              renderProps.onClick();
+            }}
+            className="fab fa-google"
+            style={{
+              background: "transparent",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <span style={{ marginLeft: "3px", fontSize: "10px" }}>
+              Sign in/up
+            </span>
+          </i>
+        )}
+        clientId={CLIENT_ID}
+        buttonText="Login"
+        onSuccess={responseGoogle}
+        onFailure={responseGoogle}
+      />
+    </>
   );
 };
 
