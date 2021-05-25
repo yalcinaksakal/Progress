@@ -17,7 +17,7 @@
 
 .buttonsDiv {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: space-around;
 }
@@ -42,6 +42,7 @@
   font-size: 1rem;
   padding: 0.5rem;
   transition: all ease-out 0.2s;
+  margin-bottom: 20px;
 }
 
 .Button:hover {
@@ -50,7 +51,7 @@
   transition: all ease-out 0.2s;
 }
 .Confirm:hover {
-  transform: scale(1.1);
+  transform: scale(1.05);
 }
 
 @keyframes openModal {
@@ -70,15 +71,10 @@
 
 @media (max-width: 350px) {
   .buttonsDiv {
-    flex-direction: column;
     align-items: stretch;
-    justify-content: flex-end;
   }
   .Modal {
     left: 10%;
     width: 80%;
-  }
-  .Confirm {
-    margin-bottom: 20px;
   }
 }

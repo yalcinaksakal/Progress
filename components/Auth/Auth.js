@@ -45,17 +45,17 @@ const Auth = () => {
     });
 
     if (!loginData.ok) {
-      loginFailHandler(loginData.error);
+      loginFailHandler();
       return;
     }
     if (!loginData.isUser) {
-      console.log(loginData);
       dispatch(
         loginActions.setState({
           isLogin: true,
-          status: `Hi ${loginData.given_name.toUpperCase()}. Please confirm and sign up to Progress.`,
+          status: `Hi ${loginData.given_name.toUpperCase()}. Please confirm and then sign up to Progress.`,
         })
       );
+      dispatch(authActions.setToken(response.tokenObj.id_token));
     }
 
     // dispatch(

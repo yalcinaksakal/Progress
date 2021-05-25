@@ -41,7 +41,9 @@ const authSlice = createSlice({
       state.loginType = null;
       localStorage.removeItem("token");
     },
-
+    setToken(state, action) {
+      state.token = action.payload;
+    },
     // remainingTimeHandler(state) {
     //   state.remainingTime--;
     // },

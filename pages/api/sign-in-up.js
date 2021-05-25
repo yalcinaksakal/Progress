@@ -2,6 +2,9 @@ import { OAuth2Client } from "google-auth-library";
 import { CLIENT_ID } from "../../config/config";
 import { MongoClient, ObjectId } from "mongodb";
 const client = new OAuth2Client(CLIENT_ID);
+const DB_ACCESS =
+  "mongodb+srv://yalcinaksakal:95tEPq74uhiLGmT@cluster0.srzeq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+// yalcinaksakal:95tEPq74uhiLGmT
 
 async function verify(token) {
   try {
@@ -21,19 +24,22 @@ async function verify(token) {
 
 async function checkIsUser(email) {
   try {
-    const client = await MongoClient.connect(
-      "mongodb+srv://ya:qwe123zx@cluster0.kxotm.mongodb.net/meetups?retryWrites=true&w=majority"
-    );
+    const client = await MongoClient.connect(DB_ACCESS);
     const db = client.db();
     const progressCollection = db.collection("progress");
 
     const user = await progressCollection.findOne({ email: email });
-
+    const meetups = await progressCollection.find().toArray();
+    console.log(meetups);
+    client.close();
     return { ok: true, isUser: !!user };
   } catch (err) {
+    console.log(err);
     return { ok: false, error: err.message };
   }
 }
+
+async function signUpNewUser(credentials) {}
 
 async function handler(req, res) {
   if (req.method === "POST") {
@@ -60,9 +66,12 @@ async function handler(req, res) {
           .json({ auth: true, isUser: false, given_name: result.given_name });
         return;
       }
+      res.status(200).json({ ...result, isUser: true });
+      return;
     }
-
-    res.status(200).json({ ...result, isUser: true });
+    if (type === "signup") {
+      const isSignedUp = await signUpNewUser(result);
+    }
   }
 }
 
