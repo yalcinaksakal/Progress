@@ -3,6 +3,7 @@ import { useState } from "react";
 import NavItemDetails from "./NavItemDetails";
 import { NAV_ITEMS } from "../../../config/config";
 import NavItem from "./NavItem";
+
 import styles from "./NavList.module.css";
 import Auth from "../../Auth/Auth";
 import Image from "next/image";
@@ -23,14 +24,16 @@ const Navlist = () => {
       <nav>
         <ul>
           {NAV_ITEMS.map(item => (
-            <NavItem key={item.name} {...item} onHover={hoverHandler} />
+            <li key={item.name}>
+              <NavItem {...item} onHover={hoverHandler} />
+              {showDetails && <NavItemDetails show name={name} />}
+            </li>
           ))}
           <li className={styles.login}>
             <Auth />
           </li>
         </ul>
       </nav>
-      {showDetails && <NavItemDetails show name={name} />}
     </header>
   );
 };

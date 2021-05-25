@@ -1,6 +1,7 @@
 .navItemDetail {
-  position: fixed;
-  top: 3.2rem;
+  position: absolute;
+  top: 2rem;
+  background: white;
   left: 100%;
   padding: 0.5rem 0 0.5rem 0.5rem;
   z-index: 2;

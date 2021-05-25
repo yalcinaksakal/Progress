@@ -12,6 +12,7 @@
     "google-auth-library": "^7.0.4",
     "mongodb": "^3.6.8",
     "next": "10.2.2",
+    "primeicons": "^4.1.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-google-login": "^5.2.2",
