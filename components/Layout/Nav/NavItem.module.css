@@ -4,7 +4,9 @@
   cursor: pointer;
   transition: all ease-out 0.2s;
 }
-
+.svgIcon {
+  size: 30px;
+}
 .item:hover,
 .item.active {
   color: dodgerblue;
