@@ -20,9 +20,9 @@ const Terms = ({ onConfirm }) => {
           {checked ? (
             <SvgIcon style={{ color: "green" }}>{check}</SvgIcon>
           ) : (
-            <SvgIcon style={{ color: "red" }}>{circle}</SvgIcon>
+            <SvgIcon className={styles.notChecked}>{circle}</SvgIcon>
           )}
-          <div>By signing up, you agree to our terms and conditions.</div>
+          <div>By clicking above checkbox, you agree to our terms and conditions.</div>
         </div>
       </div>
       <button

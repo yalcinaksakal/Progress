@@ -22,6 +22,25 @@
 .confirmation {
   user-select: none;
 }
+
+.notChecked {
+  color: red;
+  animation: bump infinite 2s ease-out forwards;
+}
 .checkBox {
   width: 100%;
+}
+@keyframes bump {
+  0% {
+    opacity: 0.5;
+    transform: scale(0.9);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0.5;
+    transform: scale(0.9);
+  }
 }
