@@ -1,6 +1,7 @@
 import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import useFetch from "../../hooks/use-fetch";
+import { authActions } from "../../store/auth/auth-slice";
 import { loginActions } from "../../store/auth/google-slice";
 import Backdrop from "../../UI/BackDrop/Backdrop";
 import Modal from "../../UI/Modal/Modal";
@@ -14,14 +15,17 @@ const Layout = props => {
 
   const cancelLoginHandler = useCallback(() => {
     dispatch(loginActions.setState({ isLogin: false, status: "" }));
+    dispatch(authActions.setToken(null));
   }, [dispatch]);
 
   const confirmSignUpHandler = async () => {
     dispatch(loginActions.setState({ isLogin: true, status: "Signing up" }));
+
     const loginData = await fetchLoginData({
       token: token,
       type: "signup",
     });
+
     if (!loginData.ok)
       dispatch(
         loginActions.setState({
@@ -30,6 +34,7 @@ const Layout = props => {
         })
       );
     console.log(loginData);
+    // DDDDDDDDDDDDDDDDD
   };
 
   useEffect(() => {

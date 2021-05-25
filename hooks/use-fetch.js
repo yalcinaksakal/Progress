@@ -12,7 +12,6 @@ const useFetch = () => {
         }),
         headers: { "Content-Type": "application/json" },
       });
-
       const fetchedData = await response.json();
 
       if (!response.ok) {
@@ -28,7 +27,7 @@ const useFetch = () => {
         ).toISOString();
         return { ok: true, ...fetchedData };
       }
-      return { ok: true, result: fetchedData.message };
+      return { ok: true, result: fetchedData };
     } catch (error) {
       setIsLoading(false);
       return { ok: false, error: error.message };

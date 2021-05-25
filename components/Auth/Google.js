@@ -32,6 +32,8 @@ const Google = ({ loginStartHandler, responseHandler }) => {
         )}
         clientId={CLIENT_ID}
         buttonText="Sign in/up"
+        isSignedIn={true}
+        uxMode="redirect"
         onSuccess={responseHandler}
         onFailure={responseHandler}
         cookiePolicy="single_host_origin"

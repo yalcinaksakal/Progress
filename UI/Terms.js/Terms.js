@@ -22,7 +22,9 @@ const Terms = ({ onConfirm }) => {
           ) : (
             <SvgIcon className={styles.notChecked}>{circle}</SvgIcon>
           )}
-          <div>By clicking above checkbox, you agree to our terms and conditions.</div>
+          <div>
+            By clicking above checkbox, you agree to our terms and conditions.
+          </div>
         </div>
       </div>
       <button

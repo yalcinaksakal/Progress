@@ -7,7 +7,7 @@ const Modal = ({ text, clicked, onConfirm }) => {
   const signUp = text.slice(0, 2) === "Hi";
   return (
     <div className={styles.Modal}>
-      <p>{text}</p>
+      <p>{text === "Signing in/up" ? "Signing in..." : text}</p>
       {(text === "Signing in/up" || text === "Signing up") && <Spinner />}
       {text !== "Signing up" && (
         <div className={styles.buttonsDiv}>

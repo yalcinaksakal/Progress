@@ -39,6 +39,7 @@ const Auth = () => {
       loginFailHandler();
       return;
     }
+    loginStartHandler();
     const loginData = await fetchLoginData({
       token: response.tokenObj.id_token,
       type: "login",
@@ -56,8 +57,11 @@ const Auth = () => {
         })
       );
       dispatch(authActions.setToken(response.tokenObj.id_token));
+      return;
     }
 
+    //SUCCESS
+    console.log(loginData);
     // dispatch(
     //   loginActions.setState({
     //     isLogin: true,

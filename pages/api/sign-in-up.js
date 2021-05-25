@@ -29,8 +29,6 @@ async function checkIsUser(email) {
     const progressCollection = db.collection("progress");
 
     const user = await progressCollection.findOne({ email: email });
-    const meetups = await progressCollection.find().toArray();
-    console.log(meetups);
     client.close();
     return { ok: true, isUser: !!user };
   } catch (err) {
@@ -39,7 +37,28 @@ async function checkIsUser(email) {
   }
 }
 
-async function signUpNewUser(credentials) {}
+async function signUpNewUser({
+  email,
+  picture,
+  given_name,
+  family_name,
+  locale,
+}) {
+  try {
+    const client = await MongoClient.connect(DB_ACCESS);
+    const db = client.db();
+    const progressCollection = db.collection("progress");
+    const data = { email, picture, given_name, family_name, locale };
+    const result = await progressCollection.insertOne(data);
+    client.close();
+    if (!result.insertedCount) {
+      throw new Error("Couldn't sign up.");
+    }
+    return { ok: true, ...result };
+  } catch (err) {
+    return { ok: false, error: err.message };
+  }
+}
 
 async function handler(req, res) {
   if (req.method === "POST") {
@@ -70,7 +89,16 @@ async function handler(req, res) {
       return;
     }
     if (type === "signup") {
-      const isSignedUp = await signUpNewUser(result);
+      const signingUp = await signUpNewUser(result);
+      if (!signingUp.ok) {
+        res.status(401).json({
+          error: "DB error",
+          message: signingUp.error,
+        });
+        return;
+      }
+      res.status(200).json({ ...result, isUser: true });
+      return;
     }
   }
 }
