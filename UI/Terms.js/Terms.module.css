@@ -1,0 +1,23 @@
+.x:hover {
+  color: dodgerblue;
+}
+.Confirm {
+  outline: none;
+  border: none;
+  border: 1px solid limegreen;
+  background: limegreen;
+  border-radius: 5px;
+  color: white;
+  font-size: 1rem;
+  padding: 0.5rem;
+  transition: all ease-out 0.2s;
+  margin: 10px;
+}
+.Confirm:hover:enabled {
+  transform: scale(1.02);
+}
+.Confirm:disabled {
+  background: rgb(142, 142, 142);
+  border-color: rgb(110, 110, 110);
+  color: rgb(230, 230, 230);
+}

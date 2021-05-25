@@ -29,6 +29,7 @@
 
 .header li {
   margin-left: 1rem;
+  color: rgb(167, 167, 167);
 }
 .login {
   cursor: pointer;

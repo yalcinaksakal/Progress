@@ -52,7 +52,7 @@ const Auth = () => {
       dispatch(
         loginActions.setState({
           isLogin: true,
-          status: `Hi ${loginData.given_name.toUpperCase()}. Please confirm and then sign up to Progress.`,
+          status: `Hi ${loginData.given_name.toUpperCase()}. Please click Confirm and then sign up to Progress.`,
         })
       );
       dispatch(authActions.setToken(response.tokenObj.id_token));

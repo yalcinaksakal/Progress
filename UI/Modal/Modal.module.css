@@ -31,27 +31,12 @@
   color: red;
   font-size: 1rem;
   padding: 0.1rem 0.5rem;
-}
-.Confirm {
-  outline: none;
-  border: none;
-  border: 1px solid limegreen;
-  background: limegreen;
-  border-radius: 5px;
-  color: white;
-  font-size: 1rem;
-  padding: 0.5rem;
   transition: all ease-out 0.2s;
-  margin-bottom: 20px;
 }
 
 .Button:hover {
   color: white;
   background: red;
-  transition: all ease-out 0.2s;
-}
-.Confirm:hover {
-  transform: scale(1.05);
 }
 
 @keyframes openModal {
