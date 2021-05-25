@@ -1,0 +1,33 @@
+.contract {
+  width: 100%;
+  box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px,
+    rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;
+  margin-bottom: 15px;
+}
+
+.title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.title h5 {
+  margin-right: 10px;
+}
+
+.title svg {
+  padding-top: 5px;
+  transform: scale(2);
+}
+.title svg:hover {
+  color: dodgerblue;
+}
+
+.contract textarea {
+  padding-bottom: 15px;
+  resize: none;
+  border: none;
+  width: 100%;
+  height: 20vh;
+}

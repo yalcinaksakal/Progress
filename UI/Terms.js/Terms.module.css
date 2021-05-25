@@ -19,6 +19,9 @@
   color: rgb(230, 230, 230);
 }
 
-.checkBox {
+.confirmation {
   user-select: none;
+}
+.checkBox {
+  width: 100%;
 }

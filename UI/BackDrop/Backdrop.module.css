@@ -9,8 +9,6 @@
   animation: openBD 0.4s ease-out forwards;
 }
 
-
-
 @keyframes openBD {
   0% {
     opacity: 0;
