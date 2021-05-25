@@ -26,11 +26,7 @@ function AuthApp({ Component, pageProps }) {
     <Provider store={store}>
       <Head>
         <title>Progress</title>
-        <link
-          rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css"
-        />
-        
+
         <link rel="icon" href="/p2.png" />
         <meta
           name="description"

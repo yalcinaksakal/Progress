@@ -2,7 +2,7 @@
   position: absolute;
   top: 5rem;
   background: white;
-  left: 0;
+  min-width: 150px;
   padding: 0.5rem;
   z-index: 2;
   color: dodgerblue;
@@ -36,14 +36,16 @@
   }
   75% {
     opacity: 0.4;
-    transform: translateY(-1.3rem);
+    transform: translateY(-1.5rem);
   }
   100% {
     opacity: 1;
-    top: 1.2rem;
+    top: 1.6rem;
+    left: -60px;
     transform: translateY(0);
   }
 }
+
 @media (max-width: 400px) {
   .navItemDetail {
     width: 150px;

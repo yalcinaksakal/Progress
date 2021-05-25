@@ -3,8 +3,9 @@ import Link from "next/link";
 import styles from "./NavItem.module.css";
 import { useState } from "react";
 import NavItemDetails from "./NavItemDetails";
-import { NAV_ITEMS2 } from "../../../config/config";
+import { NAV_ITEMS } from "../../../config/config";
 import SvgIcon from "@material-ui/core/SvgIcon";
+import Auth from "../../Auth/Auth";
 
 const NavItem = ({ item }) => {
   const router = useRouter();
@@ -19,15 +20,19 @@ const NavItem = ({ item }) => {
       onMouseEnter={() => setShowDetails(true)}
       onMouseLeave={() => setShowDetails(false)}
     >
-      <Link href={path}>
-        <SvgIcon className={styles.svgIcon}>{NAV_ITEMS2[item].svg}</SvgIcon>
-      </Link>
+      {item !== "login" ? (
+        <Link href={path}>
+          <SvgIcon viewBox="0 0 23 23">{NAV_ITEMS[item].svg}</SvgIcon>
+        </Link>
+      ) : (
+        <Auth />
+      )}
       {showDetails && (
         <NavItemDetails
           onMouseEnter={() => setShowDetails(true)}
           onMouseLeave={() => setShowDetails(false)}
           show
-          name={NAV_ITEMS2[item].name}
+          name={NAV_ITEMS[item].name}
         />
       )}
     </li>
