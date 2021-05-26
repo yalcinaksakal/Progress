@@ -7,6 +7,10 @@ import Spinner from "../UI/Spinner/Spinner";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 function AuthApp({ Component, pageProps }) {
+  // useEffect(() => {
+  //   const decoded_cookie = decodeURIComponent(document.cookie);
+  //   console.log(decoded_cookie);
+  // }, []);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   useEffect(() => {

@@ -44,9 +44,14 @@ const Layout = props => {
         picture: loginData.picture,
       })
     );
+    
+    dispatch(
+      loginActions.setState({
+        isLogin: true,
+        status: `Welcome ${loginData.given_name.toUpperCase()}`,
+      })
+    );
 
-    console.log(loginData);
-    console.log(token);
     // DDDDDDDDDDDDDDDDD
     ///login
     ///create login cookie

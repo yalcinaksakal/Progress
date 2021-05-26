@@ -8,22 +8,7 @@ import Google from "./Google";
 const Auth = () => {
   const { sendRequest: fetchLoginData } = useFetch();
   const dispatch = useDispatch();
-  const loginHandler = (
-    token,
-    expirationTime,
-    userName,
-    loginType = "google"
-  ) => {
-    dispatch(
-      authActions.login({
-        token,
-        expirationTime,
-        userName,
-        loginType,
-      })
-    );
-    // dispatch(setLogoutTimer(calculateRemainingTime(expirationTime)));
-  };
+
   const loginFailHandler = () => {
     dispatch(loginActions.setState({ isLogin: true, status: "Login failed" }));
   };
@@ -68,7 +53,17 @@ const Auth = () => {
         status: `Welcome ${loginData.given_name.toUpperCase()}`,
       })
     );
-    console.log(response.tokenObj.id_token);
+
+    dispatch(
+      authActions.login({
+        token: response.tokenObj.id_token,
+        email: loginData.email,
+        userName: loginData.given_name,
+        userFamilyName: loginData.family_name,
+        locale: loginData.locale,
+        picture: loginData.picture,
+      })
+    );
 
     // const expiresIn = +response.tokenObj.expires_in;
     // //fix 120 seconds to logout, if u want logout according to Firebase expiresIn time, use it instead of 120 below

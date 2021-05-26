@@ -1,5 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { calculateRemainingTime, retriveStoredToken } from "../../lib/helper";
+import {
+  calculateRemainingTime,
+  retriveStoredToken,
+  setCookie,
+} from "../../lib/helper";
 
 const initialState = {
   isLoggedIn: false,
@@ -25,13 +29,7 @@ const authSlice = createSlice({
       state.email = email;
       state.locale = locale;
       state.userPicture = picture;
-
-      localStorage.setItem(
-        "token",
-        JSON.stringify({
-          ...action.payload,
-        })
-      );
+      setCookie({ token: { ...action.payload } });
     },
     logout(state) {
       state.isLoggedIn = false;
