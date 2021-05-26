@@ -2,7 +2,7 @@
   position: absolute;
   top: 5rem;
   background: white;
-  min-width: 150px;
+  width: 150px;
   padding: 0.5rem;
   z-index: 2;
   color: dodgerblue;

@@ -1,6 +1,7 @@
 import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import useFetch from "../../hooks/use-fetch";
+
 import { authActions } from "../../store/auth/auth-slice";
 import { loginActions } from "../../store/auth/google-slice";
 import Backdrop from "../../UI/BackDrop/Backdrop";
@@ -33,32 +34,25 @@ const Layout = props => {
           status: "Authentication failed",
         })
       );
+    dispatch(
+      authActions.login({
+        token,
+        email: loginData.email,
+        userName: loginData.given_name,
+        userFamilyName: loginData.family_name,
+        locale: loginData.locale,
+        picture: loginData.picture,
+      })
+    );
+
     console.log(loginData);
     console.log(token);
     // DDDDDDDDDDDDDDDDD
     ///login
     ///create login cookie
-    ///use cookie to at first render to directly sign in
+    ///use cookie to  directly sign in at first render
     //render nav as logged in
   };
-//   {ok: true, result: {…}}
-// ok: true
-// result:
-// at_hash: "RvE6o1Ma0OGLFLKYGD50mA"
-// aud: "362034787777-3bv42p9qsdeohgvtce875alt5jvr5opb.apps.googleusercontent.com"
-// azp: "362034787777-3bv42p9qsdeohgvtce875alt5jvr5opb.apps.googleusercontent.com"
-// email: "hranarima@gmail.com"
-// email_verified: true
-// exp: 1621994995
-// family_name: "hraniova"
-// given_name: "marianna"
-// iat: 1621991395
-// isUser: true
-// iss: "accounts.google.com"
-// jti: "846b6b2a6bec9eb62ace92841db7a71c0eca0de5"
-// locale: "tr"
-// name: "marianna hraniova"
-// picture: "https://lh
 
   useEffect(() => {
     let timeout;

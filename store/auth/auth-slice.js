@@ -4,9 +4,11 @@ import { calculateRemainingTime, retriveStoredToken } from "../../lib/helper";
 const initialState = {
   isLoggedIn: false,
   token: null,
-  remainingTime: 0,
+  email: null,
   userName: null,
-  loginType: null,
+  userFamilyName: null,
+  locale: "en-GB",
+  userPicture: null,
 };
 
 const authSlice = createSlice({
@@ -14,22 +16,20 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     login(state, action) {
-      const { token, expirationTime, userName, loginType } = action.payload;
+      const { token, email, userName, userFamilyName, locale, picture } =
+        action.payload;
       state.token = token;
       state.isLoggedIn = true;
       state.userName = userName;
-      state.loginType = loginType;
-      state.remainingTime = Math.trunc(
-        calculateRemainingTime(expirationTime) / 1000
-      );
+      state.userFamilyName = userFamilyName;
+      state.email = email;
+      state.locale = locale;
+      state.userPicture = picture;
 
       localStorage.setItem(
         "token",
         JSON.stringify({
-          token,
-          expirationTime,
-          userName,
-          loginType,
+          ...action.payload,
         })
       );
     },
