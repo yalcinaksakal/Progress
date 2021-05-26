@@ -5,6 +5,7 @@ import styles from "./Modal.module.css";
 
 const Modal = ({ text, clicked, onConfirm }) => {
   const signUp = text.slice(0, 2) === "Hi";
+  const check = text === "Signing in/up" || signUp;
   return (
     <div className={styles.Modal}>
       <p>{text === "Signing in/up" ? "Signing in..." : text}</p>
@@ -12,8 +13,11 @@ const Modal = ({ text, clicked, onConfirm }) => {
       {text !== "Signing up" && (
         <div className={styles.buttonsDiv}>
           {signUp && <Terms onConfirm={onConfirm} />}
-          <button className={styles.Button} onClick={clicked}>
-            {text === "Signing in/up" || signUp ? "Cancel" : "OK"}
+          <button
+            className={`${styles.Button} ${check ? styles.red : styles.green}`}
+            onClick={clicked}
+          >
+            {check ? "Cancel" : "OK"}
           </button>
         </div>
       )}

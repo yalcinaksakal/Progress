@@ -25,18 +25,29 @@
 .Button {
   outline: none;
   border: none;
-  border: 1px solid red;
   background: white;
   border-radius: 5px;
-  color: red;
   font-size: 1rem;
   padding: 0.1rem 0.5rem;
   transition: all ease-out 0.2s;
 }
 
-.Button:hover {
+.green {
+  border: 1px solid limegreen;
+  color: limegreen;
+}
+.red {
+  border: 1px solid red;
+  color: red;
+}
+
+.red:hover {
   color: white;
   background: red;
+}
+.green:hover {
+  color: white;
+  background: limegreen;
 }
 
 @keyframes openModal {

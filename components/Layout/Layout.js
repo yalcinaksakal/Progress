@@ -34,8 +34,31 @@ const Layout = props => {
         })
       );
     console.log(loginData);
+    console.log(token);
     // DDDDDDDDDDDDDDDDD
+    ///login
+    ///create login cookie
+    ///use cookie to at first render to directly sign in
+    //render nav as logged in
   };
+//   {ok: true, result: {…}}
+// ok: true
+// result:
+// at_hash: "RvE6o1Ma0OGLFLKYGD50mA"
+// aud: "362034787777-3bv42p9qsdeohgvtce875alt5jvr5opb.apps.googleusercontent.com"
+// azp: "362034787777-3bv42p9qsdeohgvtce875alt5jvr5opb.apps.googleusercontent.com"
+// email: "hranarima@gmail.com"
+// email_verified: true
+// exp: 1621994995
+// family_name: "hraniova"
+// given_name: "marianna"
+// iat: 1621991395
+// isUser: true
+// iss: "accounts.google.com"
+// jti: "846b6b2a6bec9eb62ace92841db7a71c0eca0de5"
+// locale: "tr"
+// name: "marianna hraniova"
+// picture: "https://lh
 
   useEffect(() => {
     let timeout;
