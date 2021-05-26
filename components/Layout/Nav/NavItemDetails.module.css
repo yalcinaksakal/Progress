@@ -9,7 +9,7 @@
   border-radius: 5px;
   box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px,
     rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;
-
+  animation: openModal 0.2s ease-out forwards;
   font-size: 0.8rem;
 }
 .navItemDetail div {
@@ -20,15 +20,7 @@
 .navItemDetail div:hover {
   color: dodgerblue;
 }
-.firstItems {
-  animation: openModal 0.2s ease-out forwards;
-}
-.lastItems {
-  animation: openModal2 0.2s ease-out forwards;
-}
-.beforeLast {
-  animation: openModal3 0.2s ease-out forwards;
-}
+
 @keyframes openModal {
   0% {
     opacity: 0;
@@ -49,56 +41,7 @@
   100% {
     opacity: 1;
     top: 1.6rem;
-    left: -60px;
-    transform: translateY(0);
-  }
-}
-@keyframes openModal2 {
-  0% {
-    opacity: 0;
-    transform: translateY(-1rem);
-  }
-  25% {
-    opacity: 0.1;
-    transform: translateY(-1rem);
-  }
-  50% {
-    opacity: 0.2;
-    transform: translateY(-1rem);
-  }
-  75% {
-    opacity: 0.4;
-    transform: translateY(-1.5rem);
-  }
-  100% {
-    opacity: 1;
-    top: 1.6rem;
-    left: -120px;
-    transform: translateY(0);
-  }
-}
-
-@keyframes openModal3 {
-  0% {
-    opacity: 0;
-    transform: translateY(-1rem);
-  }
-  25% {
-    opacity: 0.1;
-    transform: translateY(-1rem);
-  }
-  50% {
-    opacity: 0.2;
-    transform: translateY(-1rem);
-  }
-  75% {
-    opacity: 0.4;
-    transform: translateY(-1.5rem);
-  }
-  100% {
-    opacity: 1;
-    top: 1.6rem;
-    left: -70px;
+    left: calc(-120px + var(--left) * 1px);
     transform: translateY(0);
   }
 }
