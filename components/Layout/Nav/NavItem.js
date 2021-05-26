@@ -7,11 +7,12 @@ import { NAV_ITEMS } from "../../../config/config";
 import SvgIcon from "@material-ui/core/SvgIcon";
 import Auth from "../../Auth/Auth";
 
-const NavItem = ({ item }) => {
+const NavItem = ({ item, isLast, isBeforeLast }) => {
   const router = useRouter();
   const path = `/${item}`;
   const [showDetails, setShowDetails] = useState(false);
-
+  // const isLast = ["profile", "logout", "login"].includes(item);
+  // console.log(isLast);
   return (
     <li
       className={`${styles.item} ${
@@ -33,6 +34,8 @@ const NavItem = ({ item }) => {
           onMouseLeave={() => setShowDetails(false)}
           show
           name={NAV_ITEMS[item].name}
+          isLast={isLast}
+          isBeforeLast={isBeforeLast}
         />
       )}
     </li>

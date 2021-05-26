@@ -17,7 +17,7 @@ const Modal = ({ text, clicked, onConfirm }) => {
             className={`${styles.Button} ${check ? styles.red : styles.green}`}
             onClick={clicked}
           >
-            {check ? "Cancel" : "OK"}
+            {check ? "Cancel" : "Ok"}
           </button>
         </div>
       )}

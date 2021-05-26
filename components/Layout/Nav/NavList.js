@@ -17,8 +17,13 @@ const Navlist = () => {
 
         <nav>
           <ul>
-            {NAV_LIST.map(item => (
-              <NavItem key={item} item={item} />
+            {NAV_LIST.map((item, index) => (
+              <NavItem
+                key={item}
+                item={item}
+                isLast={index === NAV_LIST.length - 1}
+                isBeforeLast={index === NAV_LIST.length - 2}
+              />
             ))}
           </ul>
         </nav>
