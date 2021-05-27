@@ -7,10 +7,15 @@ import Spinner from "../UI/Spinner/Spinner";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 function AuthApp({ Component, pageProps }) {
-  // useEffect(() => {
-  //   const decoded_cookie = decodeURIComponent(document.cookie);
-  //   console.log(decoded_cookie);
-  // }, []);
+  useEffect(async () => {
+    const checkCookie = async () => {
+      const result = await fetch("/api/is-logged-in");
+      return await result.json();
+    };
+    const isCookie = await checkCookie();
+    console.log(isCookie);
+  }, []);
+
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   useEffect(() => {

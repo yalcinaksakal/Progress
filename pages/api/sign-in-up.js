@@ -6,7 +6,7 @@ const DB_ACCESS =
   "mongodb+srv://yalcinaksakal:95tEPq74uhiLGmT@cluster0.srzeq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 // yalcinaksakal:95tEPq74uhiLGmT
 
-async function verify(token) {
+export async function verify(token) {
   try {
     const ticket = await client.verifyIdToken({
       idToken: token,
@@ -32,7 +32,7 @@ async function checkIsUser(email) {
     client.close();
     return { ok: true, isUser: !!user };
   } catch (err) {
-    console.log(err);
+    console.log(errS);
     return { ok: false, error: err.message };
   }
 }

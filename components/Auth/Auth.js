@@ -46,7 +46,7 @@ const Auth = () => {
     }
 
     //SUCCESS
-    console.log(loginData);
+    console.log(response);
     dispatch(
       loginActions.setState({
         isLogin: true,

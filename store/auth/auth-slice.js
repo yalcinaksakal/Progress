@@ -29,7 +29,7 @@ const authSlice = createSlice({
       state.email = email;
       state.locale = locale;
       state.userPicture = picture;
-      setCookie({ token: { ...action.payload } });
+      setCookie({ token });
     },
     logout(state) {
       state.isLoggedIn = false;
