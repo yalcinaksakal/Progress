@@ -1,6 +1,5 @@
 import { useDispatch } from "react-redux";
 import useFetch from "../../hooks/use-fetch";
-import { loginActions } from "../../store/auth/google-slice";
 import { authActions } from "../../store/auth/auth-slice";
 import Backdrop from "../../UI/BackDrop/Backdrop";
 import Modal from "../../UI/Modal/Modal";

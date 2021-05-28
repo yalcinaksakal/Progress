@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import cookie from "js-cookie";
 const Google = ({ loginStartHandler, responseHandler }) => {
   const { pathname } = useRouter();
+
   const loginClickedHandler = () => {
     cookie.set("progress_location_before_sign_in", pathname, {
       expires: 1 / 24,
