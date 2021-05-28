@@ -28,7 +28,7 @@ const NavItem = ({ item, isLast, isBeforeLast }) => {
       ) : (
         <Auth />
       )}
-      {showDetails && (
+      {showDetails && window.innerWidth > 400 && (
         <NavItemDetails
           onMouseEnter={() => setShowDetails(true)}
           onMouseLeave={() => setShowDetails(false)}

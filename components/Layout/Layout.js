@@ -44,7 +44,7 @@ const Layout = props => {
         picture: loginData.picture,
       })
     );
-    
+    console.log(loginData);
     dispatch(
       loginActions.setState({
         isLogin: true,

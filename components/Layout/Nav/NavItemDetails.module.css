@@ -45,9 +45,3 @@
     transform: translateY(0);
   }
 }
-
-@media (max-width: 400px) {
-  .navItemDetail {
-    visibility: hidden;
-  }
-}

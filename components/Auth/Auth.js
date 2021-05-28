@@ -24,7 +24,9 @@ const Auth = () => {
       loginFailHandler();
       return;
     }
+
     loginStartHandler();
+
     const loginData = await fetchLoginData({
       token: response.tokenObj.id_token,
       type: "login",

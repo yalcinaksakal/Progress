@@ -12,7 +12,9 @@ export async function verify(token) {
       idToken: token,
       audience: CLIENT_ID,
     });
+    console.log(ticket);
     const payload = ticket.getPayload();
+   
     return { isFailed: false, result: payload };
   } catch (err) {
     return {

@@ -41,16 +41,11 @@ const Google = ({ loginStartHandler, responseHandler }) => {
           </SvgIcon>
         )}
         clientId={CLIENT_ID}
-        buttonText="Sign in/up"
-        // isSignedIn={true}
-
-        // uxMode="redirect"
-        // redirectUri="http://localhost:3000/"
+        isSignedIn={false}
         onSuccess={responseHandler}
         onFailure={responseHandler}
         cookiePolicy="single_host_origin"
       />
-
     </div>
   );
 };
