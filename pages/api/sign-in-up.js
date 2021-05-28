@@ -14,7 +14,7 @@ export async function verify(token) {
     });
     console.log(ticket);
     const payload = ticket.getPayload();
-   
+
     return { isFailed: false, result: payload };
   } catch (err) {
     return {
@@ -32,7 +32,15 @@ async function checkIsUser(email) {
 
     const user = await progressCollection.findOne({ email: email });
     client.close();
-    return { ok: true, isUser: !!user };
+    return {
+      ok: true,
+      isUser: !!user,
+      email: user.email,
+      picture: user.picture,
+      given_name: user.given_name,
+      family_name: user.family_name,
+      locale: user.locale,
+    };
   } catch (err) {
     console.log(errS);
     return { ok: false, error: err.message };
@@ -87,7 +95,7 @@ async function handler(req, res) {
           .json({ auth: true, isUser: false, given_name: result.given_name });
         return;
       }
-      res.status(200).json({ ...result, isUser: true });
+      res.status(200).json({ ...result, ...userStatus });
       return;
     }
     if (type === "signup") {
@@ -106,43 +114,3 @@ async function handler(req, res) {
 }
 
 export default handler;
-// const processType = changePwd
-//   ? "update"
-//   : isLogin
-//   ? "signInWithPassword"
-//   : "signUp";
-// console.log(processType);
-// const url = `https://identitytoolkit.googleapis.com/v1/accounts:${processType}?key=AIzaSyDEnXFbshker5Olr0956buPRDcbGY7HxjU`;
-// const body = changePwd
-//   ? JSON.stringify({
-//       idToken: token,
-//       password: password,
-//       returnSecureToken: false,
-//     })
-//   : JSON.stringify({
-//       email: email,
-//       password: password,
-//       returnSecureToken: returnSecureToken,
-//     });
-// const response = await fetch(url, {
-//   method: "POST",
-//   body: body,
-//   headers: { "Content-Type": "application/json" },
-// });
-// const data = await response.json();
-// if (!response.ok) {
-//   let errorMsg = "Authentication Failed";
-//   if (!isLogin && data && data.error && data.error.message)
-//     errorMsg = data.error.message.replace(/_/g, " ").toLowerCase();
-//   res.status(400).json({ error: { code: 400, message: errorMsg } });
-//   return;
-// }
-// res
-//   .status(200)
-//   .json(
-//     changePwd
-//       ? data
-//       : isLogin
-//       ? { expiresIn: data.expiresIn, idToken: data.idToken }
-//       : { message: "Account is successfully created." }
-//   );

@@ -1,13 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {
-  calculateRemainingTime,
-  retriveStoredToken,
-  setCookie,
-} from "../../lib/helper";
+import { setCookie } from "../../lib/helper";
 
 const initialState = {
   isLoggedIn: false,
-  token: null,
   email: null,
   userName: null,
   userFamilyName: null,
@@ -22,29 +17,22 @@ const authSlice = createSlice({
     login(state, action) {
       const { token, email, userName, userFamilyName, locale, picture } =
         action.payload;
-      state.token = token;
       state.isLoggedIn = true;
       state.userName = userName;
       state.userFamilyName = userFamilyName;
       state.email = email;
       state.locale = locale;
       state.userPicture = picture;
-      setCookie({ token });
+      setCookie(token);
     },
     logout(state) {
       state.isLoggedIn = false;
-      state.token = null;
-      state.remainingTime = 0;
       state.userName = null;
-      state.loginType = null;
-      localStorage.removeItem("token");
+      state.userFamilyName = null;
+      state.email = null;
+      state.locale = "en-GB";
+      state.userPicture = null;
     },
-    setToken(state, action) {
-      state.token = action.payload;
-    },
-    // remainingTimeHandler(state) {
-    //   state.remainingTime--;
-    // },
   },
 });
 
