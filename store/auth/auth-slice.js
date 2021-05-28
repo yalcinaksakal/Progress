@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { setCookie } from "../../lib/helper";
 
 const initialState = {
+  token: null,
   isLoggedIn: false,
   email: null,
   userName: null,
@@ -17,21 +17,25 @@ const authSlice = createSlice({
     login(state, action) {
       const { token, email, userName, userFamilyName, locale, picture } =
         action.payload;
+      state.token = token;
       state.isLoggedIn = true;
       state.userName = userName;
       state.userFamilyName = userFamilyName;
       state.email = email;
       state.locale = locale;
       state.userPicture = picture;
-      setCookie(token);
     },
     logout(state) {
+      state.token = null;
       state.isLoggedIn = false;
       state.userName = null;
       state.userFamilyName = null;
       state.email = null;
       state.locale = "en-GB";
       state.userPicture = null;
+    },
+    setToken(state, action) {
+      state.token = action.payload;
     },
   },
 });

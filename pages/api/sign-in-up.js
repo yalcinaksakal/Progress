@@ -12,7 +12,7 @@ export async function verify(token) {
       idToken: token,
       audience: CLIENT_ID,
     });
-    console.log(ticket);
+
     const payload = ticket.getPayload();
 
     return { isFailed: false, result: payload };
@@ -24,7 +24,7 @@ export async function verify(token) {
   }
 }
 
-async function checkIsUser(email) {
+export async function checkIsUser(email) {
   try {
     const client = await MongoClient.connect(DB_ACCESS);
     const db = client.db();
@@ -42,7 +42,6 @@ async function checkIsUser(email) {
       locale: user.locale,
     };
   } catch (err) {
-    console.log(errS);
     return { ok: false, error: err.message };
   }
 }

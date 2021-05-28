@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import useFetch from "../../hooks/use-fetch";
 import { loginActions } from "../../store/auth/google-slice";
 import { authActions } from "../../store/auth/auth-slice";
-
+import { setCookie } from "../../lib/helper";
 import Google from "./Google";
 
 const Auth = () => {
@@ -48,10 +48,10 @@ const Auth = () => {
     }
 
     //SUCCESS
-
+    setCookie({ token: response.tokenObj.id_token });
     dispatch(
       authActions.login({
-        token: response.tokenObj.id_token,
+        token: null,
         email: loginData.email,
         userName: loginData.given_name,
         userFamilyName: loginData.family_name,
