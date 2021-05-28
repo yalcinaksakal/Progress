@@ -2,33 +2,37 @@ import { useDispatch } from "react-redux";
 import useFetch from "../../hooks/use-fetch";
 import { loginActions } from "../../store/auth/google-slice";
 import { authActions } from "../../store/auth/auth-slice";
-
+import Backdrop from "../../UI/BackDrop/Backdrop";
+import Modal from "../../UI/Modal/Modal";
 import Google from "./Google";
+import { useEffect, useState } from "react";
 
 const Auth = () => {
   const { sendRequest: fetchLoginData } = useFetch();
   const dispatch = useDispatch();
+  const [isLogin, setIsLogin] = useState(false);
+  const [status, setStatus] = useState("");
+  const [token, setToken] = useState(null);
 
   const loginFailHandler = () => {
-    dispatch(loginActions.setState({ isLogin: true, status: "Login failed" }));
+    setIsLogin(true);
+    setStatus("Login failed");
+    setToken(null);
   };
   const loginStartHandler = () => {
-    dispatch(loginActions.setState({ isLogin: true, status: "Signing in/up" }));
+    setIsLogin(true);
+    setStatus("Signing in/up");
   };
   const responseGoogle = async response => {
     if (response.error) {
-      // setError("Authentication failed");
-      // console.log(response);
-      // setError(response.error.replace(/_/g, " "));
-
       loginFailHandler();
       return;
     }
-
-    loginStartHandler();
+    setToken(response.tokenObj?.id_token);
+    // loginStartHandler();
 
     const loginData = await fetchLoginData({
-      token: response.tokenObj.id_token,
+      token,
       type: "login",
     });
 
@@ -37,18 +41,15 @@ const Auth = () => {
       return;
     }
     if (!loginData.isUser) {
-      dispatch(
-        loginActions.setState({
-          isLogin: true,
-          status: `Hi ${loginData.given_name.toUpperCase()}. Please click Confirm and then sign up to Progress.`,
-        })
+      setIsLogin(true);
+      setStatus(
+        `Hi ${loginData.given_name.toUpperCase()}. Please click Checkbox and Confirm button, then you will be signed up to Progress.`
       );
-      dispatch(authActions.setToken(response.tokenObj.id_token));
       return;
     }
 
     //SUCCESS
-    console.log(response);
+
     dispatch(
       loginActions.setState({
         isLogin: true,
@@ -66,33 +67,72 @@ const Auth = () => {
         picture: loginData.picture,
       })
     );
-
-    // const expiresIn = +response.tokenObj.expires_in;
-    // //fix 120 seconds to logout, if u want logout according to Firebase expiresIn time, use it instead of 120 below
-    // const expirationTime = new Date(
-    //   new Date().getTime() + 120 * 1000
-    // ).toISOString();
-
-    // loginHandler(
-    //   response.tokenObj,
-    //   expirationTime,
-    //   response.profileObj.name,
-    //   response.profileObj.imageUrl,
-    //   "google"
-    // );
-    // dispatch(
-    //   authActions.setSignIn({
-    //     isLoggingIn: true,
-    //     status: `Wellcome ${response.profileObj.name}`,
-    //   })
-    // );
   };
 
+  const cancelLoginHandler = () => {
+    setIsLogin(false);
+    setStatus("");
+    setToken(null);
+  };
+
+  const confirmSignUpHandler = async () => {
+    setIsLogin(true);
+    setStatus("Signing up");
+
+    const loginData = await fetchLoginData({
+      token,
+      type: "signup",
+    });
+
+    if (!loginData.ok) {
+      setStatus("Authentication failed");
+      setToken(null);
+      return;
+    }
+
+    dispatch(
+      authActions.login({
+        token,
+        email: loginData.email,
+        userName: loginData.given_name,
+        userFamilyName: loginData.family_name,
+        locale: loginData.locale,
+        picture: loginData.picture,
+      })
+    );
+    setStatus(`Welcome ${loginData.given_name.toUpperCase()}`);
+    console.log(loginData);
+  };
+
+  useEffect(() => {
+    let timeout;
+    if (
+      isLogin &&
+      status.slice(0, 7) !== "Signing" &&
+      status.slice(0, 2) !== "Hi"
+    ) {
+      timeout = setTimeout(() => cancelLoginHandler(), 3000);
+    }
+    return () => clearTimeout(timeout);
+  }, [isLogin, status, dispatch, cancelLoginHandler]);
+
   return (
-    <Google
-      loginStartHandler={loginStartHandler}
-      responseHandler={responseGoogle}
-    />
+    <>
+      <Google
+        loginStartHandler={loginStartHandler}
+        responseHandler={responseGoogle}
+      />
+      {isLogin && (
+        <>
+          <Backdrop />
+          <Modal
+            text={status}
+            clicked={cancelLoginHandler}
+            onConfirm={confirmSignUpHandler}
+          />
+        </>
+      )}
+    </>
   );
 };
 
