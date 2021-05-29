@@ -1,6 +1,6 @@
 import { OAuth2Client } from "google-auth-library";
 import { CLIENT_ID } from "../../config/config";
-import { MongoClient, ObjectId } from "mongodb";
+import { MongoClient } from "mongodb";
 import { EXPIRES } from "./set-token-cookie";
 const client = new OAuth2Client(CLIENT_ID);
 const DB_ACCESS =

@@ -1,6 +1,6 @@
 import cookie from "cookie";
 
-//days
+//30 days
 export const EXPIRES = 30 * 24 * 60 * 60;
 
 import { OAuth2Client } from "google-auth-library";

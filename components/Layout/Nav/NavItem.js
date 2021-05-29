@@ -23,7 +23,12 @@ const NavItem = ({ item, isLast, isBeforeLast }) => {
     >
       {item !== "login" && item !== "loading" ? (
         <Link href={path}>
-          <SvgIcon viewBox="0 0 23 23">{NAV_ITEMS[item].svg}</SvgIcon>
+          <SvgIcon
+            viewBox="0 0 23 23"
+           
+          >
+            {NAV_ITEMS[item].svg}
+          </SvgIcon>
         </Link>
       ) : item !== "loading" ? (
         <Auth />

@@ -4,9 +4,9 @@
   transition: all ease-out 0.2s;
 }
 
+
 .item:hover,
 .item.active {
   color: dodgerblue;
   transform: scale(1.1);
 }
-

@@ -16,17 +16,25 @@ function AuthApp({ Component, pageProps }) {
   useEffect(async () => {
     console.log("renderind app");
     const checkCookie = async () => {
-      const result = await fetch("/api/is-logged-in");
-      return await result.json();
+      try {
+        const result = await fetch("/api/is-logged-in");
+        return await result.json();
+      } catch (err) {
+        return false;
+      }
     };
     setSilentLogin({
       loading: true,
       result: {},
     });
     const isCookie = await checkCookie();
-    setSilentLogin({ loading: false, result: { ...isCookie } });
-  }, []);
 
+    setSilentLogin(
+      isCookie
+        ? { loading: false, result: { ...isCookie } }
+        : { loading: false, result: {} }
+    );
+  }, []);
 
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
