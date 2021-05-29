@@ -1,5 +1,6 @@
 import cookie from "cookie";
 export default handler = (req, res) => {
+  //set isLoggedIn in db to false
   res.setHeader(
     "Set-Cookie",
     cookie.serialize("progress_token1622073460654", "", {

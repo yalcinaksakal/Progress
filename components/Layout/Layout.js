@@ -72,6 +72,7 @@ const Layout = props => {
   }, [isLogin, status, dispatch, cancelLoginHandler]);
 
   useEffect(() => {
+    
     dispatch(authActions.setLoading(silentLogin.loading));
     if (silentLogin.result.isUser && silentLogin.result.ok)
       dispatch(

@@ -1,12 +1,13 @@
 import { OAuth2Client } from "google-auth-library";
 import { CLIENT_ID } from "../../config/config";
 import { MongoClient, ObjectId } from "mongodb";
+import { EXPIRES } from "./set-token-cookie";
 const client = new OAuth2Client(CLIENT_ID);
 const DB_ACCESS =
   "mongodb+srv://yalcinaksakal:95tEPq74uhiLGmT@cluster0.srzeq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 // yalcinaksakal:95tEPq74uhiLGmT
 
-export async function verify(token) {
+async function verify(token) {
   try {
     const ticket = await client.verifyIdToken({
       idToken: token,
@@ -23,7 +24,7 @@ export async function verify(token) {
   }
 }
 
-export async function checkIsUser(email) {
+async function checkIsUser(email) {
   try {
     const client = await MongoClient.connect(DB_ACCESS);
     const db = client.db();
@@ -45,6 +46,26 @@ export async function checkIsUser(email) {
     return { ok: false, error: err.message };
   }
 }
+async function updateUserSession(token, email) {
+  try {
+    const client = await MongoClient.connect(DB_ACCESS);
+    const db = client.db();
+    const progressCollection = db.collection("progress");
+    const expires = new Date().getTime() + EXPIRES;
+    const updateResult = await progressCollection.updateOne(
+      { email: email },
+      { $set: { isLoggedIn: true, token: token, expires: expires } }
+    );
+
+    client.close();
+    return {
+      ok: true,
+      result: updateResult,
+    };
+  } catch (err) {
+    return { ok: false, error: err.message };
+  }
+}
 
 async function signUpNewUser({
   email,
@@ -57,7 +78,16 @@ async function signUpNewUser({
     const client = await MongoClient.connect(DB_ACCESS);
     const db = client.db();
     const progressCollection = db.collection("progress");
-    const data = { email, picture, given_name, family_name, locale };
+    const data = {
+      email,
+      picture,
+      given_name,
+      family_name,
+      locale,
+      token: "",
+      expires: 0,
+      isLoggedIn: false,
+    };
     const result = await progressCollection.insertOne(data);
     client.close();
     if (!result.insertedCount) {
@@ -81,17 +111,25 @@ async function handler(req, res) {
 
     if (type === "login") {
       const userStatus = await checkIsUser(result.email);
-      if (!userStatus.ok) {
+      const dbError = () =>
         res.status(401).json({
           error: "DB error",
           message: "Something went wrong. Please try again",
         });
+      if (!userStatus.ok) {
+        dbError();
         return;
       }
       if (!userStatus.isUser) {
         res
           .status(200)
           .json({ auth: true, isUser: false, given_name: result.given_name });
+        return;
+      }
+      //success, add tokin and expires into db
+      const updateSessionResult = await updateUserSession(token, result.email);
+      if (!updateSessionResult.ok) {
+        dbError();
         return;
       }
       res.status(200).json({ ...result, ...userStatus });
