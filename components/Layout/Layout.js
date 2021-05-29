@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import useFetch from "../../hooks/use-fetch";
 import { setCookie } from "../../lib/helper";
@@ -10,11 +10,38 @@ import Modal from "../../UI/Modal/Modal";
 import NavList from "./Nav/NavList";
 
 const Layout = props => {
-  const silentLogin = props.silentLogin;
   const { isLogin, status } = useSelector(state => state.login);
-  const { token } = useSelector(state => state.auth);
+  const { token, isLoggedIn } = useSelector(state => state.auth);
   const dispatch = useDispatch();
   const { sendRequest: fetchLoginData } = useFetch();
+
+  const [silentLogin, setSilentLogin] = useState({
+    loading: false,
+    result: {},
+  });
+
+  useEffect(async () => {
+    const checkCookie = async () => {
+      try {
+        const result = await fetch("/api/is-logged-in");
+        return await result.json();
+      } catch (err) {
+        return false;
+      }
+    };
+    if (isLoggedIn) return;
+    setSilentLogin({
+      loading: true,
+      result: {},
+    });
+    const isCookie = await checkCookie();
+    console.log(isCookie);
+    setSilentLogin(
+      isCookie
+        ? { loading: false, result: { ...isCookie } }
+        : { loading: false, result: {} }
+    );
+  }, []);
 
   const cancelLoginHandler = useCallback(() => {
     dispatch(loginActions.setState({ isLogin: false, status: "" }));
@@ -72,7 +99,6 @@ const Layout = props => {
   }, [isLogin, status, dispatch, cancelLoginHandler]);
 
   useEffect(() => {
-    
     dispatch(authActions.setLoading(silentLogin.loading));
     if (silentLogin.result.isUser && silentLogin.result.ok)
       dispatch(

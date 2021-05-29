@@ -8,34 +8,6 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 function AuthApp({ Component, pageProps }) {
-  const [silentLogin, setSilentLogin] = useState({
-    loading: false,
-    result: {},
-  });
-
-  useEffect(async () => {
-    console.log("renderind app");
-    const checkCookie = async () => {
-      try {
-        const result = await fetch("/api/is-logged-in");
-        return await result.json();
-      } catch (err) {
-        return false;
-      }
-    };
-    setSilentLogin({
-      loading: true,
-      result: {},
-    });
-    const isCookie = await checkCookie();
-
-    setSilentLogin(
-      isCookie
-        ? { loading: false, result: { ...isCookie } }
-        : { loading: false, result: {} }
-    );
-  }, []);
-
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const isAuthPage = router.pathname === "/auth";
@@ -68,7 +40,7 @@ function AuthApp({ Component, pageProps }) {
             />
           </Head>
 
-          <Layout silentLogin={silentLogin}>
+          <Layout >
             {isLoading ? <Spinner /> : <Component {...pageProps} />}
           </Layout>
         </>

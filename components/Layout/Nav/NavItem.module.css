@@ -4,6 +4,13 @@
   transition: all ease-out 0.2s;
 }
 
+.red {
+  color: #cb2626 !important;
+}
+
+.red:hover {
+  color: red !important;
+}
 
 .item:hover,
 .item.active {

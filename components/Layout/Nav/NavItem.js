@@ -8,6 +8,7 @@ import SvgIcon from "@material-ui/core/SvgIcon";
 import Auth from "../../Auth/Auth";
 import Spinner from "../../../UI/Spinner/Spinner2";
 
+
 const NavItem = ({ item, isLast, isBeforeLast }) => {
   const router = useRouter();
   const path = `/${item}`;
@@ -17,18 +18,13 @@ const NavItem = ({ item, isLast, isBeforeLast }) => {
     <li
       className={`${styles.item} ${
         router.pathname === path ? styles.active : ""
-      }`}
+      } ${item === "logout" ? styles.red : ""}`}
       onMouseEnter={() => setShowDetails(true)}
       onMouseLeave={() => setShowDetails(false)}
     >
       {item !== "login" && item !== "loading" ? (
         <Link href={path}>
-          <SvgIcon
-            viewBox="0 0 23 23"
-           
-          >
-            {NAV_ITEMS[item].svg}
-          </SvgIcon>
+          <SvgIcon viewBox="0 0 23 23">{NAV_ITEMS[item].svg}</SvgIcon>
         </Link>
       ) : item !== "loading" ? (
         <Auth />

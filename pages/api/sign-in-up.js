@@ -1,11 +1,9 @@
 import { OAuth2Client } from "google-auth-library";
 import { CLIENT_ID } from "../../config/config";
-import { MongoClient } from "mongodb";
+
+import { getDbConnection } from "./db-connection";
 import { EXPIRES } from "./set-token-cookie";
 const client = new OAuth2Client(CLIENT_ID);
-const DB_ACCESS =
-  "mongodb+srv://yalcinaksakal:95tEPq74uhiLGmT@cluster0.srzeq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
-// yalcinaksakal:95tEPq74uhiLGmT
 
 async function verify(token) {
   try {
@@ -26,13 +24,8 @@ async function verify(token) {
 
 async function checkIsUser(email) {
   try {
-    const client = await MongoClient.connect(DB_ACCESS);
-    const db = client.db();
-    const progressCollection = db.collection("progress");
-
+    const progressCollection = await getDbConnection();
     const user = await progressCollection.findOne({ email: email });
-
-    client.close();
     return {
       ok: true,
       isUser: !!user,
@@ -48,16 +41,13 @@ async function checkIsUser(email) {
 }
 async function updateUserSession(token, email) {
   try {
-    const client = await MongoClient.connect(DB_ACCESS);
-    const db = client.db();
-    const progressCollection = db.collection("progress");
-    const expires = new Date().getTime() + EXPIRES;
+    const progressCollection = await getDbConnection();
+    const expires = new Date().getTime() + EXPIRES * 1000;
+
     const updateResult = await progressCollection.updateOne(
       { email: email },
       { $set: { isLoggedIn: true, token: token, expires: expires } }
     );
-
-    client.close();
     return {
       ok: true,
       result: updateResult,
@@ -73,23 +63,22 @@ async function signUpNewUser({
   given_name,
   family_name,
   locale,
+  token,
 }) {
   try {
-    const client = await MongoClient.connect(DB_ACCESS);
-    const db = client.db();
-    const progressCollection = db.collection("progress");
+    const progressCollection = await getDbConnection();
     const data = {
       email,
       picture,
       given_name,
       family_name,
       locale,
-      token: "",
-      expires: 0,
-      isLoggedIn: false,
+      token,
+      expires: new Date().getTime() + EXPIRES * 1000,
+      isLoggedIn: true,
     };
     const result = await progressCollection.insertOne(data);
-    client.close();
+
     if (!result.insertedCount) {
       throw new Error("Couldn't sign up.");
     }
@@ -103,14 +92,18 @@ async function handler(req, res) {
   if (req.method === "POST") {
     const { type, token } = req.body;
     const { result, isFailed } = await verify(token);
-
+    console.log(result);
+    console.log("token verified by google");
     if (isFailed) {
       res.status(401).json({ error: "Invalid token", message: "Login Failed" });
       return;
     }
 
     if (type === "login") {
+      console.log("checking user");
       const userStatus = await checkIsUser(result.email);
+      console.log("user status gathered");
+      console.log(userStatus);
       const dbError = () =>
         res.status(401).json({
           error: "DB error",
@@ -136,7 +129,7 @@ async function handler(req, res) {
       return;
     }
     if (type === "signup") {
-      const signingUp = await signUpNewUser(result);
+      const signingUp = await signUpNewUser({ ...result, token });
       if (!signingUp.ok) {
         res.status(401).json({
           error: "DB error",
