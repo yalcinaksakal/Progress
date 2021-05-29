@@ -39,7 +39,7 @@ const Layout = props => {
       return;
     }
     // sign up Success
-    setCookie({ token });
+    setCookie({ token, email: loginData.email });
     dispatch(
       authActions.login({
         token: null,

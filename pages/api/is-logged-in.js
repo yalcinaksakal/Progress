@@ -6,13 +6,20 @@ export default async (req, res) => {
       isLoggedIn: false,
     });
   };
-  const token = req.cookies["progress_token1622073460654"]?.slice(1, -1);
+  let cookieData = req.cookies["progress_token1622073460654"];
+  cookieData = cookieData
+    ? JSON.parse(cookieData)
+    : { token: null, email: null };
 
-  if (!token) {
+  const { token, email } = cookieData;
+
+  if (!token || !email) {
     returnFail();
     return;
   }
+
   const { result, isFailed } = await verify(token);
+
   if (isFailed) {
     returnFail();
     return;

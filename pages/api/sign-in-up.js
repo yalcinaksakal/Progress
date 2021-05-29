@@ -12,7 +12,6 @@ export async function verify(token) {
       idToken: token,
       audience: CLIENT_ID,
     });
-
     const payload = ticket.getPayload();
 
     return { isFailed: false, result: payload };
@@ -107,7 +106,7 @@ async function handler(req, res) {
         });
         return;
       }
-     
+
       res.status(200).json({ ...signingUp, isUser: true });
       return;
     }

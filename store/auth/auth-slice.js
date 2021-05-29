@@ -8,7 +8,7 @@ const initialState = {
   userFamilyName: null,
   locale: "en-GB",
   userPicture: null,
-  isLoading: false,
+  isLoading: true,
 };
 
 const authSlice = createSlice({

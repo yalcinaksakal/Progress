@@ -46,9 +46,9 @@ const Auth = () => {
       dispatch(authActions.setToken(response.tokenObj.id_token));
       return;
     }
-
+    console.log(response);
     //SUCCESS
-    setCookie({ token: response.tokenObj.id_token });
+    setCookie({ token: response.tokenObj.id_token, email: loginData.email });
     dispatch(
       authActions.login({
         token: null,
