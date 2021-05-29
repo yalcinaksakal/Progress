@@ -8,6 +8,7 @@ const initialState = {
   userFamilyName: null,
   locale: "en-GB",
   userPicture: null,
+  isLoading: false,
 };
 
 const authSlice = createSlice({
@@ -24,6 +25,7 @@ const authSlice = createSlice({
       state.email = email;
       state.locale = locale;
       state.userPicture = picture;
+      state.isLoading = false;
     },
     logout(state) {
       state.token = null;
@@ -33,9 +35,13 @@ const authSlice = createSlice({
       state.email = null;
       state.locale = "en-GB";
       state.userPicture = null;
+      state.isLoading = false;
     },
     setToken(state, action) {
       state.token = action.payload;
+    },
+    setLoading(state, action) {
+      state.isLoading = action.payload;
     },
   },
 });

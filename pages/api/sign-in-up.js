@@ -31,15 +31,16 @@ export async function checkIsUser(email) {
     const progressCollection = db.collection("progress");
 
     const user = await progressCollection.findOne({ email: email });
+
     client.close();
     return {
       ok: true,
       isUser: !!user,
-      email: user.email,
-      picture: user.picture,
-      given_name: user.given_name,
-      family_name: user.family_name,
-      locale: user.locale,
+      email: user?.email,
+      picture: user?.picture,
+      given_name: user?.given_name,
+      family_name: user?.family_name,
+      locale: user?.locale,
     };
   } catch (err) {
     return { ok: false, error: err.message };
@@ -63,7 +64,7 @@ async function signUpNewUser({
     if (!result.insertedCount) {
       throw new Error("Couldn't sign up.");
     }
-    return { ok: true, ...result };
+    return { ok: true, email, picture, given_name, family_name, locale };
   } catch (err) {
     return { ok: false, error: err.message };
   }
@@ -106,7 +107,8 @@ async function handler(req, res) {
         });
         return;
       }
-      res.status(200).json({ ...result, isUser: true });
+     
+      res.status(200).json({ ...signingUp, isUser: true });
       return;
     }
   }

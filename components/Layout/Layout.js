@@ -1,6 +1,7 @@
 import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import useFetch from "../../hooks/use-fetch";
+import { setCookie } from "../../lib/helper";
 
 import { authActions } from "../../store/auth/auth-slice";
 import { loginActions } from "../../store/auth/google-slice";
@@ -9,6 +10,7 @@ import Modal from "../../UI/Modal/Modal";
 import NavList from "./Nav/NavList";
 
 const Layout = props => {
+  const silentLogin = props.silentLogin;
   const { isLogin, status } = useSelector(state => state.login);
   const { token } = useSelector(state => state.auth);
   const dispatch = useDispatch();
@@ -36,7 +38,8 @@ const Layout = props => {
       );
       return;
     }
-
+    // sign up Success
+    setCookie({ token });
     dispatch(
       authActions.login({
         token: null,
@@ -67,6 +70,21 @@ const Layout = props => {
     }
     return () => clearTimeout(timeout);
   }, [isLogin, status, dispatch, cancelLoginHandler]);
+
+  useEffect(() => {
+    dispatch(authActions.setLoading(silentLogin.loading));
+    if (silentLogin.result.isUser && silentLogin.result.ok)
+      dispatch(
+        authActions.login({
+          token: null,
+          email: silentLogin.result.email,
+          userName: silentLogin.result.given_name,
+          userFamilyName: silentLogin.result.family_name,
+          locale: silentLogin.result.locale,
+          picture: silentLogin.result.picture,
+        })
+      );
+  }, [silentLogin]);
 
   return (
     <>

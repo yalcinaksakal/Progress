@@ -1,23 +1,14 @@
 import GoogleLogin from "react-google-login";
 import { CLIENT_ID } from "../../config/config";
 import SvgIcon from "@material-ui/core/SvgIcon";
-import { useRouter } from "next/router";
-import cookie from "js-cookie";
-const Google = ({ loginStartHandler, responseHandler }) => {
-  const { pathname } = useRouter();
-  const loginClickedHandler = () => {
-    cookie.set("progress_location_before_sign_in", pathname, {
-      expires: 1 / 24,
-    });
-  };
 
+const Google = ({ loginStartHandler, responseHandler }) => {
   return (
     <div onClick={loginStartHandler}>
       <GoogleLogin
         render={renderProps => (
           <SvgIcon
             onClick={() => {
-              loginClickedHandler();
               renderProps.onClick();
             }}
             viewBox="0 0 600 600"

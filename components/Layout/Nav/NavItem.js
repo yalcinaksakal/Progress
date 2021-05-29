@@ -7,12 +7,12 @@ import { NAV_ITEMS } from "../../../config/config";
 import SvgIcon from "@material-ui/core/SvgIcon";
 import Auth from "../../Auth/Auth";
 
+
 const NavItem = ({ item, isLast, isBeforeLast }) => {
   const router = useRouter();
   const path = `/${item}`;
   const [showDetails, setShowDetails] = useState(false);
-  // const isLast = ["profile", "logout", "login"].includes(item);
-  // console.log(isLast);
+
   return (
     <li
       className={`${styles.item} ${

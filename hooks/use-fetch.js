@@ -27,7 +27,7 @@ const useFetch = () => {
         ).toISOString();
         return { ok: true, ...fetchedData };
       }
-      return { ok: true, result: fetchedData };
+      return { ok: true, ...fetchedData };
     } catch (error) {
       setIsLoading(false);
       return { ok: false, error: error.message };

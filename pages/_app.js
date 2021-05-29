@@ -27,13 +27,6 @@ function AuthApp({ Component, pageProps }) {
     setSilentLogin({ loading: false, result: { ...isCookie } });
   }, []);
 
-  // email: "hranarima@gmail.com"
-  // family_name: "hraniova"
-  // given_name: "marianna"
-  // isUser: true
-  // locale: "tr"
-  // ok: true
-  // picture: "https://lh3.googleusercontent.com/a/AATXAJywI1F3tc1S4yfRrFh144esRuo
 
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
