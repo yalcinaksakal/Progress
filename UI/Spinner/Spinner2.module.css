@@ -1,29 +1,31 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 5px;
+}
 .spinner {
-  width: 20px;
-  height: 20px;
-  border-radius: 100%;
-  position: absolute;
-  border: 0.5px solid red;
-  animation: up 1s;
-  animation-iteration-count: infinite;
-  transition: 2s;
-  border-bottom: none;
-  border-right: none;
-  animation-timing-function: linear;
-  margin-left: -14px;
-  margin-top: -14px;
-  left: 50%;
-  top: 50%;
+  width: 25px;
+  height: 25px;
+  border-radius: 20%;
+  border: 3px solid dodgerblue;
+  animation: up 1s linear infinite;
 }
 
 @keyframes up {
   from {
-    transform: rotate(0deg);
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(0.8);
   }
   50% {
-    transform: rotate(180deg);
+    transform: scale(0.6);
+  }
+  75% {
+    transform: scale(0.4);
   }
   100% {
-    transform: rotate(360deg);
+    transform: scale(1);
   }
 }

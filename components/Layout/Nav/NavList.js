@@ -54,7 +54,6 @@ const Navlist = () => {
                 />
               );
             })}
-            <li key="x"><Spinner2/></li>
           </ul>
         </nav>
       </div>
