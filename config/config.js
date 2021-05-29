@@ -55,6 +55,10 @@ const NAV_ITEMS = {
     name: "Sign in/up",
     svg: null,
   },
+  loading: {
+    name: "Signing in",
+    svg: null,
+  },
 };
 
 const check = (

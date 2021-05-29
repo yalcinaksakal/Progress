@@ -6,7 +6,7 @@ import NavItemDetails from "./NavItemDetails";
 import { NAV_ITEMS } from "../../../config/config";
 import SvgIcon from "@material-ui/core/SvgIcon";
 import Auth from "../../Auth/Auth";
-
+import Spinner from "../../../UI/Spinner/Spinner2";
 
 const NavItem = ({ item, isLast, isBeforeLast }) => {
   const router = useRouter();
@@ -21,12 +21,14 @@ const NavItem = ({ item, isLast, isBeforeLast }) => {
       onMouseEnter={() => setShowDetails(true)}
       onMouseLeave={() => setShowDetails(false)}
     >
-      {item !== "login" ? (
+      {item !== "login" && item !== "loading" ? (
         <Link href={path}>
           <SvgIcon viewBox="0 0 23 23">{NAV_ITEMS[item].svg}</SvgIcon>
         </Link>
-      ) : (
+      ) : item !== "loading" ? (
         <Auth />
+      ) : (
+        <Spinner />
       )}
       {showDetails && window.innerWidth > 400 && (
         <NavItemDetails

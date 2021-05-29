@@ -1,14 +1,33 @@
 import Link from "next/link";
-import { NAV_ITEM_AUTH_REQS, NAV_LIST } from "../../../config/config";
 import NavItem from "./NavItem";
 import styles from "./NavList.module.css";
 import Image from "next/image";
 import { useSelector } from "react-redux";
-import Spinner from "../../../UI/Spinner/Spinner";
+import Spinner2 from "../../../UI/Spinner/Spinner2";
 
+// token: null,
+// isLoggedIn: false,
+// email: null,
+// userName: null,
+// userFamilyName: null,
+// locale: "en-GB",
+// userPicture: null,
+// isLoading: false,
+
+// const NAV_LIST = [
+//   "categories",
+//   "cart",
+//   "favourites",
+//   "profile",
+//   "logout",
+//   "login",
+// ];
 const Navlist = () => {
   const loginState = useSelector(state => state.auth);
 
+  const navList = loginState.isLoggedIn
+    ? ["categories", "cart", "favourites", "profile", "logout"]
+    : ["categories", "cart", "login"];
   return (
     <header className={styles.header}>
       <Link href="/">
@@ -21,15 +40,21 @@ const Navlist = () => {
 
         <nav>
           <ul>
-            {NAV_LIST.map((item, index) => (
-              !NAV_ITEM_AUTH_REQS[item]?
-              <NavItem
-                key={item}
-                item={item}
-                isLast={index === NAV_LIST.length - 1}
-                isBeforeLast={index === NAV_LIST.length - 2}
-              />:loginState.isLoading?<Spinner/>
-            ))}
+            {navList.map((listItem, index) => {
+              const item =
+                listItem === "login" && loginState.isLoading
+                  ? "loading"
+                  : listItem;
+              return (
+                <NavItem
+                  key={item}
+                  item={item}
+                  isLast={index === navList.length - 1}
+                  isBeforeLast={index === navList.length - 2}
+                />
+              );
+            })}
+            <li key="x"><Spinner2/></li>
           </ul>
         </nav>
       </div>
@@ -38,11 +63,3 @@ const Navlist = () => {
 };
 
 export default Navlist;
-// token: null,
-// isLoggedIn: false,
-// email: null,
-// userName: null,
-// userFamilyName: null,
-// locale: "en-GB",
-// userPicture: null,
-// isLoading: false,
