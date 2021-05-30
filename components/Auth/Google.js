@@ -1,17 +1,17 @@
 import GoogleLogin from "react-google-login";
 import { CLIENT_ID } from "../../config/config";
-import SvgIcon from "@material-ui/core/SvgIcon";
+
 
 const Google = ({ loginStartHandler, responseHandler }) => {
   return (
     <div onClick={loginStartHandler}>
       <GoogleLogin
         render={renderProps => (
-          <SvgIcon
+          <svg
             onClick={() => {
               renderProps.onClick();
             }}
-            viewBox="0 0 600 600"
+            viewBox="0 0 700 700"
           >
             <path
               d="M533.5 278.4c0-18.5-1.5-37.1-4.7-55.3H272.1v104.8h147c-6.1 33.8-25.7 63.7-54.4 82.7v68h87.7c51.5-47.4 81.1-117.4 81.1-200.2z"
@@ -29,7 +29,7 @@ const Google = ({ loginStartHandler, responseHandler }) => {
               d="M272.1 107.7c38.8-.6 76.3 14 104.4 40.8l77.7-77.7C405 24.6 339.7-.8 272.1 0 169.2 0 75.1 58 28.9 150l90.4 70.1c21.5-64.5 81.8-112.4 152.8-112.4z"
               fill="#ea4335"
             />
-          </SvgIcon>
+          </svg>
         )}
         clientId={CLIENT_ID}
         isSignedIn={false}

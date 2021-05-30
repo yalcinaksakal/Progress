@@ -1,15 +1,15 @@
 import { useState } from "react";
 import styles from "./TermsAndC.module.css";
-import SvgIcon from "@material-ui/core/SvgIcon";
+
 import { arrowDown } from "../../config/config";
-const agreement = "sadasd";
+
 const TermsAndConditions = () => {
   const [show, setShow] = useState(false);
   return (
     <div className={styles.contract}>
       <div className={styles.title}>
         <h5>Terms And Conditions</h5>
-        <SvgIcon onClick={() => setShow(prev => !prev)}>{arrowDown}</SvgIcon>
+        <svg onClick={() => setShow(prev => !prev)}>{arrowDown}</svg>
       </div>
       {show && (
         <textarea

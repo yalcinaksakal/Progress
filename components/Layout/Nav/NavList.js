@@ -10,6 +10,7 @@ const Navlist = () => {
   const navList = loginState.isLoggedIn
     ? ["categories", "cart", "favourites", "profile", "logout"]
     : ["categories", "cart", "login"];
+
   return (
     <header className={styles.header}>
       <Link href="/">

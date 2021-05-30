@@ -1,11 +1,9 @@
 import { useState } from "react";
 
 import styles from "./Terms.module.css";
-import SvgIcon from "@material-ui/core/SvgIcon";
+
 import { circle, check } from "../../config/config";
 import TermsAndConditions from "./TermsAndCondition";
-
-const mySvgCheck = <SvgIcon>{check}</SvgIcon>;
 
 const Terms = ({ onConfirm }) => {
   const [checked, setChecked] = useState(false);
@@ -18,9 +16,9 @@ const Terms = ({ onConfirm }) => {
         <TermsAndConditions />
         <div onClick={changeHandler} className={styles.confirmation}>
           {checked ? (
-            <SvgIcon style={{ color: "green" }}>{check}</SvgIcon>
+            <svg style={{ color: "green" }}>{check}</svg>
           ) : (
-            <SvgIcon className={styles.notChecked}>{circle}</SvgIcon>
+            <svg className={styles.notChecked}>{circle}</svg>
           )}
           <div>
             By clicking above checkbox, you agree to our terms and conditions.

@@ -31,6 +31,7 @@
   border-radius: 5px;
   background: whitesmoke;
   height: 1.8rem;
+  margin-bottom: 5px;
 }
 .search:focus {
   background: rgb(229, 247, 253);
@@ -38,7 +39,6 @@
 .header ul {
   list-style: none;
   margin: 0;
-  margin-right: 15px;
   padding: 0;
   display: flex;
   align-items: center;
@@ -81,8 +81,9 @@
     margin: 0;
   }
 }
-@media (min-width: 600px) {
+@media (min-width: 500px) {
   .search {
     width: 260px;
+    margin-bottom: 0;
   }
 }

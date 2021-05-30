@@ -1,4 +1,4 @@
-
+import { NAV_ITEMS } from "../../../config/config";
 import styles from "./NavItemDetails.module.css";
 
 const NavItemDetails = props => {
@@ -8,12 +8,18 @@ const NavItemDetails = props => {
     <div className={styles.navItemDetail} style={{ "--left": leftShift }}>
       {props.name === "Profile" && (
         <>
-          <img
-            src={props.content.profileImg}
-            alt={props.content.userName}
-            width="50"
-            height="50"
-          />
+          {props.content.profileImg ? (
+            <img
+              src={props.content.profileImg}
+              alt={props.content.userName}
+              width="50"
+              height="50"
+            />
+          ) : (
+            <svg viewBox="0 0 25 25">
+              {NAV_ITEMS[props.name.toLowerCase()].svg}
+            </svg>
+          )}
           <br />
         </>
       )}
@@ -23,7 +29,7 @@ const NavItemDetails = props => {
           {props.name === "Profile" && (
             <p>{`${props.content.userName} ${props.content.userFamilyName}`}</p>
           )}
-          <p>{`${props.content?.email||props.content}`}</p>
+          <p>{`${props.content?.email || props.content}`}</p>
         </div>
       ) : (
         <>

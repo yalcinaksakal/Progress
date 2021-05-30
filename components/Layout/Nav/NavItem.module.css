@@ -2,33 +2,34 @@
   margin-left: 1rem;
   cursor: pointer;
   transition: all ease-out 0.2s;
+  fill: black;
+  width: 25px;
+  height: 25px;
+  padding-top: 5px;
 }
 
 .red {
-  color: #cb2626 !important;
+  fill: #cb2626;
 }
 
 .red:hover {
-  color: red !important;
+  fill: red !important;
 }
 
 .item:hover,
 .item.active {
-  color: dodgerblue;
+  fill: dodgerblue;
   transform: scale(1.1);
 }
 
 .item img {
   display: block;
-  border: 1px solid whitesmoke;
+  border: 1px solid white;
   border-radius: 50%;
-  margin-bottom: 2px;
+  transform: translateY(-2px);
+  transition: all ease-out 0.2s;
 }
-
-.item img:hover {
+.item:hover > img,
+.item.active img {
   border-color: dodgerblue;
-}
-
-.item svg {
-  transform: translateY(2px);
 }

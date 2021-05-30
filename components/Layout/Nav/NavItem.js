@@ -4,7 +4,7 @@ import styles from "./NavItem.module.css";
 import { useState } from "react";
 import NavItemDetails from "./NavItemDetails";
 import { NAV_ITEMS } from "../../../config/config";
-import SvgIcon from "@material-ui/core/SvgIcon";
+
 import Auth from "../../Auth/Auth";
 import Spinner from "../../../UI/Spinner/Spinner2";
 import { useDispatch, useSelector } from "react-redux";
@@ -33,9 +33,9 @@ const NavItem = ({ item, isLast, isBeforeLast }) => {
       {item !== "login" && item !== "loading" && item !== "logout" ? (
         <Link href={path}>
           {item === "profile" && profileImg ? (
-            <img src={profileImg} alt={userName} width="25" height="25" />
+            <img src={profileImg} alt={userName} width="26" height="26" />
           ) : (
-            <SvgIcon viewBox="0 0 23 23">{NAV_ITEMS[item].svg}</SvgIcon>
+            <svg viewBox="0 0 25 25">{NAV_ITEMS[item].svg}</svg>
           )}
         </Link>
       ) : item !== "loading" && item !== "logout" ? (
@@ -44,14 +44,12 @@ const NavItem = ({ item, isLast, isBeforeLast }) => {
         <Spinner />
       ) : (
         // Logout
-        <SvgIcon
-          onClick={() => dispatch(authActions.logout())}
-          viewBox="0 0 23 23"
-        >
+        <svg viewBox="0 0 25 25" onClick={() => dispatch(authActions.logout())}>
           {NAV_ITEMS[item].svg}
-        </SvgIcon>
+        </svg>
       )}
-      {showDetails && window.innerWidth > 400 && !isPageActive && (
+      {showDetails && window.innerWidth > 400 && (
+        // !isPageActive &&
         <NavItemDetails
           onMouseEnter={() => setShowDetails(true)}
           onMouseLeave={() => setShowDetails(false)}
