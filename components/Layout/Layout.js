@@ -9,7 +9,7 @@ import Backdrop from "../../UI/BackDrop/Backdrop";
 import BottomModal from "../../UI/Modal/BottomModal";
 import Modal from "../../UI/Modal/Modal";
 import NavList from "./Nav/NavList";
-
+import Cookies from "js-cookie";
 const Layout = props => {
   const { isLogin, status } = useSelector(state => state.login);
   const { token, isLoggedIn } = useSelector(state => state.auth);
@@ -114,11 +114,27 @@ const Layout = props => {
       );
   }, [silentLogin]);
 
+  const [isCookieAccepted, setIsCookieAccepted] = useState(true);
+  const setConsentCookieHandler = () => {
+    Cookies.set(
+      "progress_token_Cookies_Consent",
+      JSON.stringify({ accepted: true })
+    );
+    setIsCookieAccepted(true);
+  };
+  useEffect(async () => {
+    const consentCookie = await JSON.parse(
+      Cookies.get("progress_token_Cookies_Consent") || "false"
+    );
+    !consentCookie?.accepted && setIsCookieAccepted(false);
+  }, []);
   return (
     <>
       <NavList />
       <main>{props.children}</main>
-      <BottomModal />
+      {!isCookieAccepted && (
+        <BottomModal setConsentCookieHandler={setConsentCookieHandler} />
+      )}
       {isLogin && (
         <>
           <Backdrop />

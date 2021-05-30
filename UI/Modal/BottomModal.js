@@ -1,7 +1,6 @@
 import styles from "./BottomModal.module.css";
 
-const BottomModal = () => {
-  const setConsentCookieHandler = () => {};
+const BottomModal = ({ setConsentCookieHandler }) => {
   return (
     <div className={styles.Modal}>
       <p>Cookie consent message</p>
