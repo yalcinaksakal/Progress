@@ -41,7 +41,13 @@ function AuthApp({ Component, pageProps }) {
           </Head>
 
           <Layout>
-            {isLoading ? <Spinner /> : <Component {...pageProps} />}
+            {isLoading ? (
+              <section>
+                <Spinner />
+              </section>
+            ) : (
+              <Component {...pageProps} />
+            )}
           </Layout>
         </>
       )}

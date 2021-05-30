@@ -12,8 +12,9 @@ import { authActions } from "../../../store/auth/auth-slice";
 
 const NavItem = ({ item, isLast, isBeforeLast }) => {
   const dispatch = useDispatch();
-  const router = useRouter();
+  const { pathname } = useRouter();
   const path = `/${item}`;
+  const isPageActive = pathname === path;
   const [showDetails, setShowDetails] = useState(false);
   const { email, userName, userFamilyName, userPicture } = useSelector(
     state => state.auth
@@ -23,9 +24,9 @@ const NavItem = ({ item, isLast, isBeforeLast }) => {
 
   return (
     <li
-      className={`${styles.item} ${
-        router.pathname === path ? styles.active : ""
-      } ${item === "logout" ? styles.red : ""}`}
+      className={`${styles.item} ${isPageActive ? styles.active : ""} ${
+        item === "logout" ? styles.red : ""
+      }`}
       onMouseEnter={() => setShowDetails(true)}
       onMouseLeave={() => setShowDetails(false)}
     >
@@ -50,7 +51,7 @@ const NavItem = ({ item, isLast, isBeforeLast }) => {
           {NAV_ITEMS[item].svg}
         </SvgIcon>
       )}
-      {showDetails && window.innerWidth > 400 && (
+      {showDetails && window.innerWidth > 400 && !isPageActive && (
         <NavItemDetails
           onMouseEnter={() => setShowDetails(true)}
           onMouseLeave={() => setShowDetails(false)}

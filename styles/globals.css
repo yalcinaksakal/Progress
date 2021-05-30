@@ -8,6 +8,7 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   overflow-y: auto;
   overflow-x: hidden;
+  
 }
 
 a {
@@ -17,4 +18,12 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+section {
+  min-height: 50vh;
+  margin: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }

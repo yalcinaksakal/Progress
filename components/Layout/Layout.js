@@ -6,6 +6,7 @@ import { setCookie } from "../../lib/helper";
 import { authActions } from "../../store/auth/auth-slice";
 import { loginActions } from "../../store/auth/google-slice";
 import Backdrop from "../../UI/BackDrop/Backdrop";
+import BottomModal from "../../UI/Modal/BottomModal";
 import Modal from "../../UI/Modal/Modal";
 import NavList from "./Nav/NavList";
 
@@ -117,6 +118,7 @@ const Layout = props => {
     <>
       <NavList />
       <main>{props.children}</main>
+      <BottomModal />
       {isLogin && (
         <>
           <Backdrop />

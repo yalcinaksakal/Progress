@@ -1,18 +1,20 @@
 import { useSelector } from "react-redux";
-import ProfileForm from "./ProfileForm";
+
 import classes from "./UserProfile.module.css";
 
 const UserProfile = () => {
-  const { loginType, userName } = useSelector(state => state.auth);
+  const { email, userName } = useSelector(state => state.auth);
 
   return (
     <section className={classes.profile}>
-      <h1>{userName}</h1>
-      <p>Your User Profile</p>
-      {loginType === "user" ? (
-        <ProfileForm />
+      {email ? (
+        <>
+          <h1>{userName}</h1>
+          <p>{email}</p>
+          <p>You used your Google account to sign in.</p>
+        </>
       ) : (
-        <p>You used your Google account to sign in.</p>
+        <h3>Please sign in to view this page.</h3>
       )}
     </section>
   );

@@ -1,10 +1,11 @@
 .navItemDetail {
   position: absolute;
-  top: 5rem;
+  top: 7rem;
+  left: calc(-120px + var(--left) * 1px);
   background: white;
   width: 150px;
   padding: 0.5rem;
-  z-index: 2;
+  z-index: 50;
   color: dodgerblue;
   border-radius: 5px;
   box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px,
@@ -30,24 +31,25 @@
 @keyframes openModal {
   0% {
     opacity: 0;
-    transform: translateY(-1rem);
+
+    top: 6rem;
   }
   25% {
     opacity: 0.1;
-    transform: translateY(-1rem);
+
+    top: 4rem;
   }
   50% {
     opacity: 0.2;
-    transform: translateY(-1rem);
+
+    top: 2rem;
   }
   75% {
     opacity: 0.4;
-    transform: translateY(-1.5rem);
+    top: 0rem;
   }
   100% {
     opacity: 1;
     top: 1.6rem;
-    left: calc(-120px + var(--left) * 1px);
-    transform: translateY(0);
   }
 }
