@@ -23,7 +23,7 @@ const NavItemDetails = props => {
           {props.name === "Profile" && (
             <p>{`${props.content.userName} ${props.content.userFamilyName}`}</p>
           )}
-          <p>{`${props.content.email}`}</p>
+          <p>{`${props.content?.email||props.content}`}</p>
         </div>
       ) : (
         <>

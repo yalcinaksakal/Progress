@@ -22,12 +22,18 @@
   display: flex;
 }
 
-.menu input{
-  
-}
-
 .search {
+  font-family: "Lato";
+  border: none;
   padding: 0.1rem 0.5rem;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  outline: none;
+  border-radius: 5px;
+  
+  height: 1.8rem;
+}
+.search:focus {
+  background: rgb(229, 247, 253);
 }
 .header ul {
   list-style: none;
@@ -68,7 +74,7 @@
     flex-direction: column-reverse;
   }
   .search {
-    margin-top: 0.5rem;
+    transform: translateY(5px);
   }
   .header ul {
     width: 70vw;

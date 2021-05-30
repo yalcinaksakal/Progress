@@ -27,7 +27,7 @@ async function logoutFromDb(email, token) {
   }
 }
 
-export default (req, res) => {
+export default async (req, res) => {
   const returnFail = (err = "Sth went wrong.") => {
     res.status(401).json({
       ok: false,
@@ -57,7 +57,7 @@ export default (req, res) => {
     })
   );
 
-  const responseDB = logoutFromDb(email, token);
+  const responseDB = await logoutFromDb(email, token);
   if (!responseDB.ok) {
     returnFail(responseDB.error);
     return;

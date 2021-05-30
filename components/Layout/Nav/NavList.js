@@ -18,7 +18,7 @@ const Navlist = () => {
         </div>
       </Link>
       <div className={styles.menu}>
-        <input className={styles.search} type="text" placeholder="Search" />
+        <input className={styles.search} type="search" placeholder="Search" />
 
         <nav>
           <ul>

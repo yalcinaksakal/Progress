@@ -20,7 +20,7 @@ const NavItem = ({ item, isLast, isBeforeLast }) => {
   );
 
   const profileImg = userPicture ? userPicture : null;
- 
+
   return (
     <li
       className={`${styles.item} ${
@@ -60,6 +60,8 @@ const NavItem = ({ item, isLast, isBeforeLast }) => {
           content={
             item === "logout" || item === "profile"
               ? { userName, userFamilyName, email, profileImg }
+              : item === "login"
+              ? "Sign In or Sign Up with your google account. "
               : null
           }
           isBeforeLast={isBeforeLast}

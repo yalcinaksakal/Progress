@@ -7,9 +7,9 @@
 .spinner {
   width: 25px;
   height: 25px;
-  border-radius: 20%;
-  border: 3px solid dodgerblue;
-  animation: up 1s linear infinite;
+  border-radius: 50%;
+  border: 3px solid lightblue;
+  animation: up 1.5s linear infinite;
 }
 
 @keyframes up {
