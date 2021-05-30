@@ -1,15 +1,23 @@
 import cookie from "cookie";
-import { getDbConnection } from "./db-connection";
+import { connectToDatabase } from "../../util/mongodb";
 
 async function logoutFromDb(email, token) {
   try {
-    const progressCollection = await getDbConnection();
-    const { tokenInDB } = await progressCollection.findOne({ email: email });
-    if (tokenInDB !== token) throw new Error("Token mismatch");
-    const updateResult = await progressCollection.updateOne(
-      { email: email },
-      { $set: { isLoggedIn: false, token: "", expires: 0 } }
-    );
+    const { client, db } = await connectToDatabase();
+    const isConnected = await client.isConnected();
+    if (!isConnected) throw new Error("DB connection error");
+
+    const { token: storedToken } = await db
+      .collection("users")
+      .findOne({ email: email });
+
+    if (storedToken !== token) throw new Error("Token mismatch");
+    const updateResult = await db
+      .collection("users")
+      .updateOne(
+        { email: email },
+        { $set: { isLoggedIn: false, token: "", expires: 0 } }
+      );
     return {
       ok: true,
       result: updateResult,
@@ -34,15 +42,10 @@ export default (req, res) => {
   const { token, email } = cookieData;
 
   if (!token || !email) {
-    returnFail("Cookie mismatch");
+    returnFail("No Cookie");
     return;
   }
-  const responseDB = logoutFromDb(email, token);
-  if (!responseDB.ok) {
-    returnFail(responseDB.error);
-    return;
-  }
-
+  //delete cookie, no matter data in cookie is true or not
   res.setHeader(
     "Set-Cookie",
     cookie.serialize("progress_token1622073460654", "", {
@@ -53,6 +56,12 @@ export default (req, res) => {
       path: "/",
     })
   );
+
+  const responseDB = logoutFromDb(email, token);
+  if (!responseDB.ok) {
+    returnFail(responseDB.error);
+    return;
+  }
   res.statusCode = 200;
   res.json({ success: true });
 };

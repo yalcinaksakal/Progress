@@ -35,7 +35,7 @@ const Layout = props => {
       result: {},
     });
     const isCookie = await checkCookie();
-    console.log(isCookie);
+
     setSilentLogin(
       isCookie
         ? { loading: false, result: { ...isCookie } }

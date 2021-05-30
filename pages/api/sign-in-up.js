@@ -1,8 +1,8 @@
 import { OAuth2Client } from "google-auth-library";
 import { CLIENT_ID } from "../../config/config";
-
-import { getDbConnection } from "./db-connection";
 import { EXPIRES } from "./set-token-cookie";
+import { connectToDatabase } from "../../util/mongodb";
+
 const client = new OAuth2Client(CLIENT_ID);
 
 async function verify(token) {
@@ -24,8 +24,11 @@ async function verify(token) {
 
 async function checkIsUser(email) {
   try {
-    const progressCollection = await getDbConnection();
-    const user = await progressCollection.findOne({ email: email });
+    const { client, db } = await connectToDatabase();
+    const isConnected = await client.isConnected();
+    if (!isConnected) throw new Error("DB connection error");
+    const user = await db.collection("users").findOne({ email: email });
+
     return {
       ok: true,
       isUser: !!user,
@@ -41,13 +44,18 @@ async function checkIsUser(email) {
 }
 async function updateUserSession(token, email) {
   try {
-    const progressCollection = await getDbConnection();
+    const { client, db } = await connectToDatabase();
+    const isConnected = await client.isConnected();
+    if (!isConnected) throw new Error("DB connection error");
+
     const expires = new Date().getTime() + EXPIRES * 1000;
 
-    const updateResult = await progressCollection.updateOne(
-      { email: email },
-      { $set: { isLoggedIn: true, token: token, expires: expires } }
-    );
+    const updateResult = await db
+      .collection("users")
+      .updateOne(
+        { email: email },
+        { $set: { isLoggedIn: true, token: token, expires: expires } }
+      );
     return {
       ok: true,
       result: updateResult,
@@ -66,7 +74,10 @@ async function signUpNewUser({
   token,
 }) {
   try {
-    const progressCollection = await getDbConnection();
+    const { client, db } = await connectToDatabase();
+    const isConnected = await client.isConnected();
+    if (!isConnected) throw new Error("DB connection error");
+
     const data = {
       email,
       picture,
@@ -77,7 +88,7 @@ async function signUpNewUser({
       expires: new Date().getTime() + EXPIRES * 1000,
       isLoggedIn: true,
     };
-    const result = await progressCollection.insertOne(data);
+    const result = await db.collection("users").insertOne(data);
 
     if (!result.insertedCount) {
       throw new Error("Couldn't sign up.");
@@ -92,18 +103,15 @@ async function handler(req, res) {
   if (req.method === "POST") {
     const { type, token } = req.body;
     const { result, isFailed } = await verify(token);
-    console.log(result);
-    console.log("token verified by google");
+
     if (isFailed) {
       res.status(401).json({ error: "Invalid token", message: "Login Failed" });
       return;
     }
 
     if (type === "login") {
-      console.log("checking user");
       const userStatus = await checkIsUser(result.email);
-      console.log("user status gathered");
-      console.log(userStatus);
+
       const dbError = () =>
         res.status(401).json({
           error: "DB error",

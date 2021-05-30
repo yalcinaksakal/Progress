@@ -1,15 +1,20 @@
-import { getDbConnection } from "./db-connection";
+import { connectToDatabase } from "../../util/mongodb";
 
 async function checkIsLoggedIn(email, token) {
   try {
-    const progressCollection = await getDbConnection();
-
-    const user = await progressCollection.findOne({ email: email });
+    const { client, db } = await connectToDatabase();
+    const isConnected = await client.isConnected();
+    if (!isConnected) throw new Error("DB connection error");
+    const user = await db.collection("users").findOne({ email: email });
+    if (!user)
+      return {
+        ok: true,
+        isLoggedIn: false,
+      };
     const isLoggedIn = user.isLoggedIn;
     const isEmailValid = email === user.email;
     const isTokenValid = token === user.token;
-
-    //if there is less than an hour time left to expire assume expired.
+    // //if there is less than an hour time left to expire assume expired.
     const isExpired = new Date().getTime() + 60 * 60 * 1000 > user.expires;
 
     if (isLoggedIn && isEmailValid && isTokenValid && !isExpired)
@@ -23,11 +28,6 @@ async function checkIsLoggedIn(email, token) {
         family_name: user.family_name,
         locale: user.locale,
       };
-
-    return {
-      ok: true,
-      isLoggedIn: false,
-    };
   } catch (err) {
     return { ok: false, isLoggedIn: false, error: err.message };
   }

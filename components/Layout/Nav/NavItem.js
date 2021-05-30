@@ -20,7 +20,7 @@ const NavItem = ({ item, isLast, isBeforeLast }) => {
   );
 
   const profileImg = userPicture ? userPicture : null;
-  console.log(profileImg);
+ 
   return (
     <li
       className={`${styles.item} ${
