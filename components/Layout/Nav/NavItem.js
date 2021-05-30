@@ -50,7 +50,7 @@ const NavItem = ({ item, isLast, isBeforeLast }) => {
           isLast={isLast}
           content={
             item === "logout" || item === "profile"
-              ? { userName, userFamilyName, email }
+              ? { userName, userFamilyName, email,profileImg }
               : null
           }
           isBeforeLast={isBeforeLast}

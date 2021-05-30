@@ -4,24 +4,6 @@ import styles from "./NavList.module.css";
 import Image from "next/image";
 import { useSelector } from "react-redux";
 
-
-// token: null,
-// isLoggedIn: false,
-// email: null,
-// userName: null,
-// userFamilyName: null,
-// locale: "en-GB",
-// userPicture: null,
-// isLoading: false,
-
-// const NAV_LIST = [
-//   "categories",
-//   "cart",
-//   "favourites",
-//   "profile",
-//   "logout",
-//   "login",
-// ];
 const Navlist = () => {
   const loginState = useSelector(state => state.auth);
 
