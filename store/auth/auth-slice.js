@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { deleteCookie } from "../../lib/helper";
 
 const initialState = {
   token: null,
@@ -36,8 +37,10 @@ const authSlice = createSlice({
       state.locale = "en-GB";
       state.userPicture = null;
       state.isLoading = false;
+      deleteCookie();
     },
     setToken(state, action) {
+      //setting token for just very instant temporary cases, this redux state does not keep token.
       state.token = action.payload;
     },
     setLoading(state, action) {

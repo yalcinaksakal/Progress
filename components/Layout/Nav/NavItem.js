@@ -7,16 +7,17 @@ import { NAV_ITEMS } from "../../../config/config";
 import SvgIcon from "@material-ui/core/SvgIcon";
 import Auth from "../../Auth/Auth";
 import Spinner from "../../../UI/Spinner/Spinner2";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { authActions } from "../../../store/auth/auth-slice";
 
 const NavItem = ({ item, isLast, isBeforeLast }) => {
+  const dispatch = useDispatch();
   const router = useRouter();
   const path = `/${item}`;
   const [showDetails, setShowDetails] = useState(false);
   const { email, userName, userFamilyName, userPicture } = useSelector(
     state => state.auth
   );
-  
 
   const profileImg = userPicture ? userPicture : null;
   console.log(profileImg);
@@ -28,7 +29,7 @@ const NavItem = ({ item, isLast, isBeforeLast }) => {
       onMouseEnter={() => setShowDetails(true)}
       onMouseLeave={() => setShowDetails(false)}
     >
-      {item !== "login" && item !== "loading" ? (
+      {item !== "login" && item !== "loading" && item !== "logout" ? (
         <Link href={path}>
           {item === "profile" && profileImg ? (
             <img src={profileImg} alt={userName} width="25" height="25" />
@@ -36,10 +37,18 @@ const NavItem = ({ item, isLast, isBeforeLast }) => {
             <SvgIcon viewBox="0 0 23 23">{NAV_ITEMS[item].svg}</SvgIcon>
           )}
         </Link>
-      ) : item !== "loading" ? (
+      ) : item !== "loading" && item !== "logout" ? (
         <Auth />
-      ) : (
+      ) : item === "loading" ? (
         <Spinner />
+      ) : (
+        // Logout
+        <SvgIcon
+          onClick={() => dispatch(authActions.logout())}
+          viewBox="0 0 23 23"
+        >
+          {NAV_ITEMS[item].svg}
+        </SvgIcon>
       )}
       {showDetails && window.innerWidth > 400 && (
         <NavItemDetails
@@ -50,7 +59,7 @@ const NavItem = ({ item, isLast, isBeforeLast }) => {
           isLast={isLast}
           content={
             item === "logout" || item === "profile"
-              ? { userName, userFamilyName, email,profileImg }
+              ? { userName, userFamilyName, email, profileImg }
               : null
           }
           isBeforeLast={isBeforeLast}

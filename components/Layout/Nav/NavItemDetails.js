@@ -1,4 +1,4 @@
-import { PowerInputSharp } from "@material-ui/icons";
+
 import styles from "./NavItemDetails.module.css";
 
 const NavItemDetails = props => {
