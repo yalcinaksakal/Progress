@@ -1,5 +1,6 @@
 .Modal {
   position: fixed;
+
   z-index: 200;
   border: 1px solid #eee;
   background-color: white;
@@ -64,12 +65,17 @@
   }
 }
 
-@media (max-width: 350px) {
+@media (max-width: 800px) {
   .buttonsDiv {
     align-items: stretch;
   }
   .Modal {
     left: 10%;
     width: 80%;
+  }
+}
+@media (max-width: 350px) {
+  .Modal {
+    top: 5%;
   }
 }

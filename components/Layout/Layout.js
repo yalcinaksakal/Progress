@@ -119,7 +119,7 @@ const Layout = props => {
   const setConsentCookieHandler = () => {
     Cookies.set(
       "progress_token_Cookies_Consent",
-      JSON.stringify({ accepted: true }, { expires: COOKIE_CONSENT_EXPIRES })
+      JSON.stringify({ accepted: true }, { expires: 2000 })
     );
     // cookie.set("progress_token", JSON.stringify(cookieData), { expires: 1 });
     setIsCookieAccepted(true);
