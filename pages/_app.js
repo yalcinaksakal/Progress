@@ -11,7 +11,6 @@ function AuthApp({ Component, pageProps }) {
   const [isLoading, setIsLoading] = useState(false);
   const { events } = useRouter();
 
-
   // while navigating between pages show spinner
   useEffect(() => {
     const start = () => setIsLoading(true);
