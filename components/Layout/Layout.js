@@ -10,6 +10,7 @@ import BottomModal from "../../UI/Modal/BottomModal";
 import Modal from "../../UI/Modal/Modal";
 import NavList from "./Nav/NavList";
 import Cookies from "js-cookie";
+import { COOKIE_CONSENT_EXPIRES } from "../../config/config";
 const Layout = props => {
   const { isLogin, status } = useSelector(state => state.login);
   const { token, isLoggedIn } = useSelector(state => state.auth);
@@ -118,8 +119,9 @@ const Layout = props => {
   const setConsentCookieHandler = () => {
     Cookies.set(
       "progress_token_Cookies_Consent",
-      JSON.stringify({ accepted: true })
+      JSON.stringify({ accepted: true }, { expires: COOKIE_CONSENT_EXPIRES })
     );
+    // cookie.set("progress_token", JSON.stringify(cookieData), { expires: 1 });
     setIsCookieAccepted(true);
   };
   useEffect(async () => {

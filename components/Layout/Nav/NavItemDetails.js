@@ -16,7 +16,7 @@ const NavItemDetails = props => {
               height="50"
             />
           ) : (
-            <svg viewBox="0 0 25 25">
+            <svg width="25" height="25" viewBox="0 0 25 25">
               {NAV_ITEMS[props.name.toLowerCase()].svg}
             </svg>
           )}

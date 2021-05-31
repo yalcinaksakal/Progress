@@ -20,12 +20,13 @@
 .title svg {
   width: 25px;
   height: 25px;
-  padding-top: 5px;
+  padding-top: 3px;
   margin-left: 10px;
-  transform: scale(2);
-  fill: rgb(18, 86, 154);
+  transform: scale(1.2);
+  fill: rgb(12, 58, 103);
   transition: all 0.2s ease-out;
 }
+
 .title svg:hover {
   fill: dodgerblue;
 }

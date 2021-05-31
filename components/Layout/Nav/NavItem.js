@@ -35,7 +35,9 @@ const NavItem = ({ item, isLast, isBeforeLast }) => {
           {item === "profile" && profileImg ? (
             <img src={profileImg} alt={userName} width="26" height="26" />
           ) : (
-            <svg viewBox="0 0 25 25">{NAV_ITEMS[item].svg}</svg>
+            <svg width="25" height="25" viewBox="0 0 25 25">
+              {NAV_ITEMS[item].svg}
+            </svg>
           )}
         </Link>
       ) : item !== "loading" && item !== "logout" ? (
@@ -44,7 +46,12 @@ const NavItem = ({ item, isLast, isBeforeLast }) => {
         <Spinner />
       ) : (
         // Logout
-        <svg viewBox="0 0 25 25" onClick={() => dispatch(authActions.logout())}>
+        <svg
+          width="25"
+          height="25"
+          viewBox="0 0 25 25"
+          onClick={() => dispatch(authActions.logout())}
+        >
           {NAV_ITEMS[item].svg}
         </svg>
       )}

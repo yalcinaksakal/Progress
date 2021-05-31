@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styles from "./TermsAndC.module.css";
 
-import { arrowDown } from "../../config/config";
+import { arrowDown, arrowUp } from "../../config/config";
 
 const TermsAndConditions = () => {
   const [show, setShow] = useState(false);
@@ -9,7 +9,16 @@ const TermsAndConditions = () => {
     <div className={styles.contract}>
       <div className={styles.title}>
         <h5>Terms and Conditions</h5>
-        <svg onClick={() => setShow(prev => !prev)}>{arrowDown}</svg>
+
+        {show ? (
+          <svg width="25" height="25" onClick={() => setShow(prev => !prev)}>
+            {arrowUp}
+          </svg>
+        ) : (
+          <svg width="25" height="25" onClick={() => setShow(prev => !prev)}>
+            {arrowDown}
+          </svg>
+        )}
       </div>
       {show && (
         <textarea

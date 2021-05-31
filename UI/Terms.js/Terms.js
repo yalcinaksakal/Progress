@@ -16,9 +16,9 @@ const Terms = ({ onConfirm }) => {
         <TermsAndConditions />
         <div onClick={changeHandler} className={styles.confirmation}>
           {checked ? (
-            <svg style={{ fill: "green" }}>{check}</svg>
+            <svg width="25" height="25" style={{ fill: "green" }}>{check}</svg>
           ) : (
-            <svg className={styles.notChecked}>{circle}</svg>
+            <svg width="25" height="25" className={styles.notChecked}>{circle}</svg>
           )}
           <div>
             By clicking above checkbox, you agree to our terms and conditions.
