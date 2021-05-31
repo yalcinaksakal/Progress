@@ -42,20 +42,19 @@ async function checkIsUser(email) {
     return { ok: false, error: err.message };
   }
 }
-async function updateUserSession(token, email) {
+async function updateUserSession(token, email, picture = null) {
   try {
     const { client, db } = await connectToDatabase();
     const isConnected = await client.isConnected();
     if (!isConnected) throw new Error("DB connection error");
 
     const expires = new Date().getTime() + EXPIRES * 1000;
-
+    const data = picture
+      ? { isLoggedIn: true, token: token, expires: expires, picture: picture }
+      : { isLoggedIn: true, token: token, expires: expires };
     const updateResult = await db
       .collection("users")
-      .updateOne(
-        { email: email },
-        { $set: { isLoggedIn: true, token: token, expires: expires } }
-      );
+      .updateOne({ email: email }, { $set: data });
 
     return {
       ok: true,
@@ -130,8 +129,12 @@ async function handler(req, res) {
         return;
       }
 
-      //success, add tokin and expires into db
-      const updateSessionResult = await updateUserSession(token, result.email);
+      //success, add token and expires into db
+      const updateSessionResult = await updateUserSession(
+        token,
+        result.email,
+        result.picture
+      );
       if (!updateSessionResult.ok) {
         dbError();
         return;

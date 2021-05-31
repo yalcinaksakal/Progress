@@ -3,9 +3,6 @@ const CLIENT_ID =
 
 const AUTO_LOGOUT_TIME_IN_SECONDS = 120;
 
-//5 years
-const COOKIE_CONSENT_EXPIRES = 5 * 365;
-
 const NAV_LIST = [
   "categories",
   "cart",
@@ -93,6 +90,5 @@ export {
   circle,
   arrowDown,
   NAV_ITEM_AUTH_REQS,
-  COOKIE_CONSENT_EXPIRES,
   arrowUp,
 };

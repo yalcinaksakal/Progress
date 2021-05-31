@@ -9,8 +9,7 @@ import Backdrop from "../../UI/BackDrop/Backdrop";
 import BottomModal from "../../UI/Modal/BottomModal";
 import Modal from "../../UI/Modal/Modal";
 import NavList from "./Nav/NavList";
-import Cookies from "js-cookie";
-import { COOKIE_CONSENT_EXPIRES } from "../../config/config";
+
 const Layout = props => {
   const { isLogin, status } = useSelector(state => state.login);
   const { token, isLoggedIn } = useSelector(state => state.auth);
@@ -117,18 +116,17 @@ const Layout = props => {
 
   const [isCookieAccepted, setIsCookieAccepted] = useState(true);
   const setConsentCookieHandler = () => {
-    Cookies.set(
+    localStorage.setItem(
       "progress_token_Cookies_Consent",
-      JSON.stringify({ accepted: true }, { expires: 2000 })
+      JSON.stringify({ accepted: true })
     );
-    // cookie.set("progress_token", JSON.stringify(cookieData), { expires: 1 });
     setIsCookieAccepted(true);
   };
-  useEffect(async () => {
-    const consentCookie = await JSON.parse(
-      Cookies.get("progress_token_Cookies_Consent") || "false"
+  useEffect(() => {
+    const consentData = JSON.parse(
+      localStorage.getItem("progress_token_Cookies_Consent")
     );
-    !consentCookie?.accepted && setIsCookieAccepted(false);
+    !consentData?.accepted && setIsCookieAccepted(false);
   }, []);
   return (
     <>
