@@ -2,14 +2,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transform: translateY(2px);
-  
+  transform: translateY(-2px);
 }
 .spinner {
-  width: 15px;
-  height: 15px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
-  border: 2px solid lightgreen;
+  background: lightgreen;
   animation: up 1.5s linear infinite;
 }
 

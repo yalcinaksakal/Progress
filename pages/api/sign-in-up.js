@@ -56,6 +56,7 @@ async function updateUserSession(token, email) {
         { email: email },
         { $set: { isLoggedIn: true, token: token, expires: expires } }
       );
+
     return {
       ok: true,
       result: updateResult,
@@ -121,18 +122,21 @@ async function handler(req, res) {
         dbError();
         return;
       }
+
       if (!userStatus.isUser) {
         res
           .status(200)
           .json({ auth: true, isUser: false, given_name: result.given_name });
         return;
       }
+
       //success, add tokin and expires into db
       const updateSessionResult = await updateUserSession(token, result.email);
       if (!updateSessionResult.ok) {
         dbError();
         return;
       }
+
       res.status(200).json({ ...result, ...userStatus });
       return;
     }

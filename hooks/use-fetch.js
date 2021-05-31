@@ -12,6 +12,7 @@ const useFetch = () => {
         }),
         headers: { "Content-Type": "application/json" },
       });
+
       const fetchedData = await response.json();
 
       if (!response.ok) {
