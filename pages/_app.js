@@ -9,48 +9,44 @@ import { useRouter } from "next/router";
 
 function AuthApp({ Component, pageProps }) {
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
-  const isAuthPage = router.pathname === "/auth";
+  const { events } = useRouter();
+
+
+  // while navigating between pages show spinner
   useEffect(() => {
     const start = () => setIsLoading(true);
     const end = () => setIsLoading(false);
-    router.events.on("routeChangeStart", start);
-    router.events.on("routeChangeComplete", end);
-    router.events.on("routeChangeError", end);
+    events.on("routeChangeStart", start);
+    events.on("routeChangeComplete", end);
+    events.on("routeChangeError", end);
     return () => {
-      router.events.off("routeChangeStart", start);
-      router.events.off("routeChangeComplete", end);
-      router.events.off("routeChangeError", end);
+      events.off("routeChangeStart", start);
+      events.off("routeChangeComplete", end);
+      events.off("routeChangeError", end);
     };
-  }, []);
+  }, [events]);
 
   return (
     <Provider store={store}>
-      {isAuthPage ? (
-        <Component {...pageProps} />
-      ) : (
-        <>
-          <Head>
-            <title>Progress</title>
-
-            <link rel="icon" href="/p2.png" />
-            <meta
-              name="description"
-              content="Progress platform - Online learning, meeting, therapy, coaching platform. "
-            />
-          </Head>
-
-          <Layout>
-            {isLoading ? (
-              <section>
-                <Spinner />
-              </section>
-            ) : (
-              <Component {...pageProps} />
-            )}
-          </Layout>
-        </>
-      )}
+      <>
+        <Head>
+          <title>Progress</title>
+          <link rel="icon" href="/p2.png" />
+          <meta
+            name="description"
+            content="Progress platform - Online learning, meeting, therapy, coaching platform. "
+          />
+        </Head>
+        <Layout>
+          {isLoading ? (
+            <section>
+              <Spinner />
+            </section>
+          ) : (
+            <Component {...pageProps} />
+          )}
+        </Layout>
+      </>
     </Provider>
   );
 }

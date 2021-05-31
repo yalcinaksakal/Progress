@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import useFetch from "../../hooks/use-fetch";
 import { setCookie } from "../../lib/helper";
@@ -20,29 +20,6 @@ const Layout = props => {
     loading: false,
     result: {},
   });
-  console.log("nav");
-  useEffect(async () => {
-    const checkCookie = async () => {
-      try {
-        const result = await fetch("/api/is-logged-in");
-        return await result.json();
-      } catch (err) {
-        return false;
-      }
-    };
-    if (isLoggedIn) return;
-    setSilentLogin({
-      loading: true,
-      result: {},
-    });
-    const isCookie = await checkCookie();
-
-    setSilentLogin(
-      isCookie
-        ? { loading: false, result: { ...isCookie } }
-        : { loading: false, result: {} }
-    );
-  }, []);
 
   const cancelLoginHandler = useCallback(() => {
     dispatch(loginActions.setState({ isLogin: false, status: "" }));
@@ -87,6 +64,31 @@ const Layout = props => {
     );
   };
 
+  //  initiate silent login
+  useEffect(async () => {
+    const checkCookie = async () => {
+      try {
+        const result = await fetch("/api/is-logged-in");
+        return await result.json();
+      } catch (err) {
+        return false;
+      }
+    };
+    if (isLoggedIn) return;
+    setSilentLogin({
+      loading: true,
+      result: {},
+    });
+    const isCookie = await checkCookie();
+
+    setSilentLogin(
+      isCookie
+        ? { loading: false, result: { ...isCookie } }
+        : { loading: false, result: {} }
+    );
+  }, []);
+
+  //if signup modal or signing in/up spinner are not active, auto close modal
   useEffect(() => {
     let timeout;
     if (
@@ -99,6 +101,7 @@ const Layout = props => {
     return () => clearTimeout(timeout);
   }, [isLogin, status, dispatch, cancelLoginHandler]);
 
+  //if slient login succeeds, set auth state as logged in
   useEffect(() => {
     dispatch(authActions.setLoading(silentLogin.loading));
     if (silentLogin.result.isUser && silentLogin.result.ok)
@@ -122,6 +125,8 @@ const Layout = props => {
     );
     setIsCookieAccepted(true);
   };
+
+  //check cookies were consented by the user earlier,if not show bottomModal
   useEffect(() => {
     const consentData = JSON.parse(
       localStorage.getItem("progress_token_Cookies_Consent")
@@ -150,4 +155,4 @@ const Layout = props => {
   );
 };
 
-export default Layout;
+export default React.memo(Layout);

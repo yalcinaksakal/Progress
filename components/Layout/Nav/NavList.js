@@ -3,7 +3,7 @@ import NavItem from "./NavItem";
 import styles from "./NavList.module.css";
 import Image from "next/image";
 import { useSelector } from "react-redux";
-import Spinner2 from "../../../UI/Spinner/Spinner2";
+
 
 const Navlist = () => {
   const loginState = useSelector(state => state.auth);
@@ -11,7 +11,7 @@ const Navlist = () => {
   const navList = loginState.isLoggedIn
     ? ["categories", "cart", "favourites", "tracks", "profile", "logout"]
     : ["categories", "cart", "login"];
-
+  
   return (
     <header className={styles.header}>
       <Link href="/">

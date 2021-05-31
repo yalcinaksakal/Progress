@@ -8,7 +8,6 @@ import Google from "./Google";
 const Auth = () => {
   const { sendRequest: fetchLoginData } = useFetch();
   const dispatch = useDispatch();
-
   const loginFailHandler = () => {
     dispatch(loginActions.setState({ isLogin: true, status: "Login failed" }));
   };
