@@ -20,7 +20,7 @@ const Auth = () => {
       // setError("Authentication failed");
       // console.log(response);
       // setError(response.error.replace(/_/g, " "));
-
+      console.log(response.error);
       loginFailHandler();
       return;
     }
