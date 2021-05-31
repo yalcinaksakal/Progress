@@ -66,9 +66,6 @@
 }
 
 @media (max-width: 800px) {
-  .buttonsDiv {
-    align-items: stretch;
-  }
   .Modal {
     left: 10%;
     width: 80%;
