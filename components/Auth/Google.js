@@ -11,6 +11,7 @@ const Google = ({ loginStartHandler, responseHandler }) => {
             onClick={() => {
               renderProps.onClick();
             }}
+            width="25"
             viewBox="0 0 700 700"
           >
             <path
