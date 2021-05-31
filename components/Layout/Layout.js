@@ -20,7 +20,7 @@ const Layout = props => {
     loading: false,
     result: {},
   });
-
+  console.log("nav");
   useEffect(async () => {
     const checkCookie = async () => {
       try {
@@ -126,6 +126,7 @@ const Layout = props => {
     const consentData = JSON.parse(
       localStorage.getItem("progress_token_Cookies_Consent")
     );
+
     !consentData?.accepted && setIsCookieAccepted(false);
   }, []);
   return (
