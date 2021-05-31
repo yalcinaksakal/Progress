@@ -4,8 +4,10 @@ async function checkIsLoggedIn(email, token) {
   try {
     const { client, db } = await connectToDatabase();
     const isConnected = await client.isConnected();
+
     if (!isConnected) throw new Error("DB connection error");
     const user = await db.collection("users").findOne({ email: email });
+
     if (!user)
       return {
         ok: true,
@@ -28,6 +30,7 @@ async function checkIsLoggedIn(email, token) {
         family_name: user.family_name,
         locale: user.locale,
       };
+    else throw new Error("Not authorized");
   } catch (err) {
     return { ok: false, isLoggedIn: false, error: err.message };
   }
