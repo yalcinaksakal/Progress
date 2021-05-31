@@ -16,7 +16,7 @@ const Terms = ({ onConfirm }) => {
         <TermsAndConditions />
         <div onClick={changeHandler} className={styles.confirmation}>
           {checked ? (
-            <svg style={{ color: "green" }}>{check}</svg>
+            <svg style={{ fill: "green" }}>{check}</svg>
           ) : (
             <svg className={styles.notChecked}>{circle}</svg>
           )}

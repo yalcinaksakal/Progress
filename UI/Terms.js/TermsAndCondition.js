@@ -8,7 +8,7 @@ const TermsAndConditions = () => {
   return (
     <div className={styles.contract}>
       <div className={styles.title}>
-        <h5>Terms And Conditions</h5>
+        <h5>Terms and Conditions</h5>
         <svg onClick={() => setShow(prev => !prev)}>{arrowDown}</svg>
       </div>
       {show && (

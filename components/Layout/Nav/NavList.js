@@ -8,7 +8,7 @@ const Navlist = () => {
   const loginState = useSelector(state => state.auth);
 
   const navList = loginState.isLoggedIn
-    ? ["categories", "cart", "favourites", "profile", "logout"]
+    ? ["categories", "cart", "favourites", "tracks", "profile", "logout"]
     : ["categories", "cart", "login"];
 
   return (

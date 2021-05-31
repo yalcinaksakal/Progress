@@ -81,7 +81,13 @@
     margin: 0;
   }
 }
-@media (min-width: 500px) {
+@media (min-width: 530px) and (max-width: 600px) {
+  .search {
+    width: 200px;
+    margin-bottom: 0;
+  }
+}
+@media (min-width: 600px) {
   .search {
     width: 260px;
     margin-bottom: 0;

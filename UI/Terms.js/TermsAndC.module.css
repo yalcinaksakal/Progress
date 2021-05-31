@@ -3,6 +3,7 @@
   box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px,
     rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;
   margin-bottom: 15px;
+  background: whitesmoke;
 }
 
 .title {
@@ -17,11 +18,16 @@
 }
 
 .title svg {
+  width: 25px;
+  height: 25px;
   padding-top: 5px;
+  margin-left: 10px;
   transform: scale(2);
+  fill: rgb(18, 86, 154);
+  transition: all 0.2s ease-out;
 }
 .title svg:hover {
-  color: dodgerblue;
+  fill: dodgerblue;
 }
 
 .contract textarea {

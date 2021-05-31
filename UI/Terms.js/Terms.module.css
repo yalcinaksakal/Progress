@@ -22,9 +22,13 @@
 .confirmation {
   user-select: none;
 }
+.confirmation svg {
+  width: 25px;
+  height: 25px;
+}
 
 .notChecked {
-  color: red;
+  fill: red;
   animation: bump infinite 2s ease-out forwards;
 }
 .checkBox {
@@ -33,11 +37,14 @@
 @keyframes bump {
   0% {
     opacity: 0.3;
+    transform: scale(0.8);
   }
   50% {
+    transform: scale(1);
     opacity: 1;
   }
   100% {
+    transform: scale(0.8);
     opacity: 0.3;
   }
 }
