@@ -1,12 +1,14 @@
+import { ObjectId } from "mongodb";
 import { connectToDatabase } from "../../util/mongodb";
 
-async function checkIsLoggedIn(email, token) {
+//by id
+async function checkIsLoggedIn(id, token) {
   try {
     const { client, db } = await connectToDatabase();
     const isConnected = await client.isConnected();
 
     if (!isConnected) throw new Error("DB connection error");
-    const user = await db.collection("users").findOne({ email: email });
+    const user = await db.collection("users").findOne(ObjectId(id));
 
     if (!user)
       return {
@@ -14,12 +16,11 @@ async function checkIsLoggedIn(email, token) {
         isLoggedIn: false,
       };
     const isLoggedIn = user.isLoggedIn;
-    const isEmailValid = email === user.email;
     const isTokenValid = token === user.token;
     // //if there is less than an hour time left to expire assume expired.
     const isExpired = new Date().getTime() + 60 * 60 * 1000 > user.expires;
 
-    if (isLoggedIn && isEmailValid && isTokenValid && !isExpired)
+    if (isLoggedIn && isTokenValid && !isExpired)
       return {
         ok: true,
         isLoggedIn: true,
@@ -43,20 +44,20 @@ export default async (req, res) => {
       isLoggedIn: false,
     });
   };
-  let cookieData = req.cookies["progress_token1622073460654"];
-  cookieData = cookieData
-    ? JSON.parse(cookieData)
-    : { token: null, email: null };
+  const cookieData = req.cookies["progress_token1622073460654"];
+  const id = cookieData.split(".ya").pop();
+  const token = cookieData.slice(0, -id.length - 3);
 
-  const { token, email } = cookieData;
+  // console.log("id: ", id);
+  // console.log("token: ", token);
 
-  if (!token || !email) {
+  if (!token || !id) {
     returnFail();
     return;
   }
   //check db if user is logged in, check token, email, expires values from DB to validate lodgin
 
-  const userStatus = await checkIsLoggedIn(email, token);
+  const userStatus = await checkIsLoggedIn(id, token);
 
   if (!userStatus.ok || !userStatus.isLoggedIn) {
     returnFail();

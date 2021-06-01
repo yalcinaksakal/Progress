@@ -33,8 +33,8 @@ export default async (req, res) => {
     });
   };
 
-  const { token, email } = req.body;
-  if (!token || !email) {
+  const { token, id, email } = req.body;
+  if (!token || !id || !email) {
     returnFail();
     return;
   }
@@ -47,7 +47,7 @@ export default async (req, res) => {
 
   res.setHeader(
     "Set-Cookie",
-    cookie.serialize("progress_token1622073460654", JSON.stringify(req.body), {
+    cookie.serialize("progress_token1622073460654", `${token}.ya${id}`, {
       httpOnly: true,
       //   secure: process.env.NODE_ENV !== "development",
       maxAge: EXPIRES,

@@ -1,7 +1,8 @@
 import cookie from "cookie";
 import { connectToDatabase } from "../../util/mongodb";
+import { ObjectId } from "mongodb";
 
-async function logoutFromDb(email, token) {
+async function logoutFromDb(id, token) {
   try {
     const { client, db } = await connectToDatabase();
     const isConnected = await client.isConnected();
@@ -9,13 +10,13 @@ async function logoutFromDb(email, token) {
 
     const { token: storedToken } = await db
       .collection("users")
-      .findOne({ email: email });
+      .findOne(ObjectId(id));
 
     if (storedToken !== token) throw new Error("Token mismatch");
     const updateResult = await db
       .collection("users")
       .updateOne(
-        { email: email },
+        { _id: ObjectId(id) },
         { $set: { isLoggedIn: false, token: "", expires: 0 } }
       );
     return {
@@ -34,14 +35,11 @@ export default async (req, res) => {
       Error: err,
     });
   };
-  let cookieData = req.cookies["progress_token1622073460654"];
-  cookieData = cookieData
-    ? JSON.parse(cookieData)
-    : { token: null, email: null };
+  const cookieData = req.cookies["progress_token1622073460654"];
+  const id = cookieData.split(".ya").pop();
+  const token = cookieData.slice(0, -id.length - 3);
 
-  const { token, email } = cookieData;
-
-  if (!token || !email) {
+  if (!token || !id) {
     returnFail("No Cookie");
     return;
   }
@@ -57,7 +55,7 @@ export default async (req, res) => {
     })
   );
 
-  const responseDB = await logoutFromDb(email, token);
+  const responseDB = await logoutFromDb(id, token);
   if (!responseDB.ok) {
     returnFail(responseDB.error);
     return;

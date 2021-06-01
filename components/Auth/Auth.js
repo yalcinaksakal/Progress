@@ -47,7 +47,12 @@ const Auth = () => {
 
     //SUCCESS
     //i am not using token for logging in, in the redux state, trying to kepp token null there. so calling setcookie in login dispatch might not work. so i am calling it here, i am sure that have token value here, in layout.js i am facing same issue
-    setCookie({ token: response.tokenObj.id_token, email: loginData.email });
+
+    setCookie({
+      token: response.tokenObj.id_token,
+      email: loginData.email,
+      id: loginData.id,
+    });
     dispatch(
       authActions.login({
         token: null,

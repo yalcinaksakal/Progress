@@ -2,6 +2,7 @@ import { OAuth2Client } from "google-auth-library";
 import { CLIENT_ID } from "../../config/config";
 import { EXPIRES } from "./set-token-cookie";
 import { connectToDatabase } from "../../util/mongodb";
+import { ObjectId } from "mongodb";
 
 const client = new OAuth2Client(CLIENT_ID);
 
@@ -28,7 +29,6 @@ async function checkIsUser(email) {
     const isConnected = await client.isConnected();
     if (!isConnected) throw new Error("DB connection error");
     const user = await db.collection("users").findOne({ email: email });
-
     return {
       ok: true,
       isUser: !!user,
@@ -37,12 +37,15 @@ async function checkIsUser(email) {
       given_name: user?.given_name,
       family_name: user?.family_name,
       locale: user?.locale,
+      id: user?._id?.toString(),
     };
   } catch (err) {
     return { ok: false, error: err.message };
   }
 }
-async function updateUserSession(token, email, picture = null) {
+
+///update by id
+async function updateUserSession(token, id, picture = null) {
   try {
     const { client, db } = await connectToDatabase();
     const isConnected = await client.isConnected();
@@ -54,7 +57,7 @@ async function updateUserSession(token, email, picture = null) {
       : { isLoggedIn: true, token: token, expires: expires };
     const updateResult = await db
       .collection("users")
-      .updateOne({ email: email }, { $set: data });
+      .updateOne({ _id: ObjectId(id) }, { $set: data });
 
     return {
       ok: true,
@@ -93,7 +96,15 @@ async function signUpNewUser({
     if (!result.insertedCount) {
       throw new Error("Couldn't sign up.");
     }
-    return { ok: true, email, picture, given_name, family_name, locale };
+    return {
+      ok: true,
+      email,
+      picture,
+      given_name,
+      family_name,
+      locale,
+      id: result.ops[0]._id.toString(),
+    };
   } catch (err) {
     return { ok: false, error: err.message };
   }
@@ -132,7 +143,7 @@ async function handler(req, res) {
       //success, add token and expires into db
       const updateSessionResult = await updateUserSession(
         token,
-        result.email,
+        userStatus.id,
         result.picture
       );
       if (!updateSessionResult.ok) {
