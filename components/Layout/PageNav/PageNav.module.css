@@ -1,0 +1,29 @@
+.pageNav {
+  padding: 0.2rem 0;
+  font-size: 0.8rem;
+  width: auto;
+}
+.pageNav ul {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  list-style: none;
+}
+.pageNav li {
+  padding: 0.2rem 0.5rem;
+  color: gray;
+  border-radius: 5px;
+  margin-right: 1rem;
+  border-bottom: 1px solid transparent;
+}
+.pageNav li:hover,
+.active {
+  color: dodgerblue;
+  border-bottom: 1px solid dodgerblue;
+}
+
+@media (max-width: 400px) {
+}
