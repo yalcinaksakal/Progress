@@ -44,7 +44,7 @@ const Layout = props => {
       return;
     }
     // sign up Success
-    console.log(loginData);
+
     setCookie({ token, email: loginData.email, id: loginData.id });
     dispatch(
       authActions.login({

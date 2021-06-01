@@ -16,9 +16,6 @@ const Auth = () => {
   };
   const responseGoogle = async response => {
     if (response.error) {
-      // setError("Authentication failed");
-      // console.log(response);
-      // setError(response.error.replace(/_/g, " "));
       loginFailHandler();
       return;
     }

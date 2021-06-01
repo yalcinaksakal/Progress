@@ -48,9 +48,6 @@ export default async (req, res) => {
   const id = cookieData.split(".ya").pop();
   const token = cookieData.slice(0, -id.length - 3);
 
-  // console.log("id: ", id);
-  // console.log("token: ", token);
-
   if (!token || !id) {
     returnFail();
     return;

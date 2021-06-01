@@ -33,7 +33,7 @@ const NavItem = ({ item, isLast, isBeforeLast }) => {
       {item !== "login" && item !== "loading" && item !== "logout" ? (
         <Link href={path}>
           {item === "profile" && profileImg ? (
-            <img src={profileImg} alt={userName} width="26" height="26" />
+            <img src={profileImg} alt="p" width="26" height="26" />
           ) : (
             <svg width="25" height="25" viewBox="0 0 25 25">
               {NAV_ITEMS[item].svg}

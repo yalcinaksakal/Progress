@@ -11,7 +11,7 @@ const NavItemDetails = props => {
           {props.content.profileImg ? (
             <img
               src={props.content.profileImg}
-              alt={props.content.userName}
+              alt="p"
               width="50"
               height="50"
             />
