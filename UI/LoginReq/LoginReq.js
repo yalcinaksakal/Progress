@@ -1,20 +1,37 @@
 import { cross } from "../../config/config";
 import Card from "../Card/Card";
+import Login from "../login/login";
 const LoginReq = () => {
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        height: "40vh",
-      }}
-    >
-      <svg fill="salmon" width="50" height="50" viewBox="0 0 18 18">
-        {cross}
-      </svg>
-      <p style={{ marginLeft: "1rem" }}> Please login to view this page</p>
-    </div>
+    <>
+      {" "}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          height: "6rem",
+          alignItems: "center",
+        }}
+      >
+        <Login />
+      </div>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          height: "50vh",
+        }}
+      >
+        <svg fill="salmon" width="40" height="40" viewBox="0 0 18 18">
+          {cross}
+        </svg>
+        <p style={{ marginLeft: "1rem" }}>
+          {" "}
+          Signing in is required to view this page
+        </p>
+      </div>
+    </>
   );
 };
 export default LoginReq;
