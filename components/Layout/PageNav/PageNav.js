@@ -1,11 +1,16 @@
 import Link from "next/link";
 import styles from "./PageNav.module.css";
-const PageNav = ({ page, items }) => {
+const PageNav = ({ active, items, page, directionColumn }) => {
   return (
-    <div className={styles.pageNav}>
+    <div
+      className={`${styles.pageNav} ${directionColumn ? styles.column : ""}`}
+    >
       <ul>
         {items.map(item => (
-          <li key={item}>
+          <li
+            key={item}
+            className={active === item.toLowerCase() ? styles.active : ""}
+          >
             <Link href={`/${page}#${item.toLowerCase()}`}>{item}</Link>
           </li>
         ))}

@@ -1,9 +1,10 @@
 import { NAV_ITEMS } from "../../../config/config";
+import PageNav from "../PageNav/PageNav";
 import styles from "./NavItemDetails.module.css";
 
 const NavItemDetails = props => {
   const leftShift = props.isLast ? 0 : props.isBeforeLast ? 40 : 60;
-
+  console.log(props.name);
   return (
     <div className={styles.navItemDetail} style={{ "--left": leftShift }}>
       {props.name === "Profile" && (
@@ -31,6 +32,12 @@ const NavItemDetails = props => {
           )}
           <p>{`${props.content?.email || props.content}`}</p>
         </div>
+      ) : props.name === "My Tracks" ? (
+        <PageNav
+          directionColumn
+          page="tracks"
+          items={["Progressing", "Mentoring", "Completed"]}
+        />
       ) : (
         <>
           <div>Test</div>
