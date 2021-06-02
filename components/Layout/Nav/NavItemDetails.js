@@ -4,7 +4,7 @@ import styles from "./NavItemDetails.module.css";
 
 const NavItemDetails = props => {
   const leftShift = props.isLast ? 0 : props.isBeforeLast ? 40 : 60;
-  console.log(props.name);
+
   return (
     <div className={styles.navItemDetail} style={{ "--left": leftShift }}>
       {props.name === "Profile" && (

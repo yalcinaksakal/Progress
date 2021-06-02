@@ -25,6 +25,7 @@
   border-radius: 5px;
   margin-right: 1rem;
   transition: all 0.2s ease-out;
+  user-select: none;
 }
 .pageNav.column li {
   color: black;

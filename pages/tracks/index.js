@@ -1,10 +1,13 @@
+import { useSelector } from "react-redux";
 import PageNav from "../../components/Layout/PageNav/PageNav";
 import { useRouter } from "next/router";
 import Tracks from "../../components/Tracks/Tracks";
+import LoginReq from "../../UI/LoginReq/LoginReq";
 const TracksPage = () => {
+  const { isLoggedIn } = useSelector(state => state.auth);
   let pathHash = useRouter().asPath.split("#")[1];
   if (!pathHash) pathHash = "progressing";
-  return (
+  return isLoggedIn ? (
     <>
       <PageNav
         active={pathHash}
@@ -13,6 +16,8 @@ const TracksPage = () => {
       />
       <Tracks content={pathHash} />
     </>
+  ) : (
+    <LoginReq />
   );
 };
 
