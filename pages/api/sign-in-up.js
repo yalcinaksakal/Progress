@@ -122,7 +122,7 @@ async function handler(req, res) {
 
     if (type === "login") {
       const userStatus = await checkIsUser(result.email);
-
+     
       const dbError = () =>
         res.status(401).json({
           error: "DB error",

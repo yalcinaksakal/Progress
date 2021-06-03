@@ -1,7 +1,8 @@
 import cookie from "cookie";
 import { connectToDatabase } from "../../util/mongodb";
 import { ObjectId } from "mongodb";
-
+import SimpleCrypto from "simple-crypto-js";
+import { CRYPTO_KEY } from "./set-token-cookie";
 async function logoutFromDb(id, token) {
   try {
     const { client, db } = await connectToDatabase();
@@ -36,8 +37,13 @@ export default async (req, res) => {
     });
   };
   const cookieData = req.cookies["progress_token1622073460654"];
-  const id = cookieData.split(".ya").pop();
-  const token = cookieData.slice(0, -id.length - 3);
+
+  const cookieContent = cookieData
+    ? new SimpleCrypto(CRYPTO_KEY).decrypt(cookieData)
+    : null;
+
+  const id = cookieContent?.split(".ya").pop();
+  const token = cookieContent?.slice(0, -id.length - 3);
 
   if (!token || !id) {
     returnFail("No Cookie");
