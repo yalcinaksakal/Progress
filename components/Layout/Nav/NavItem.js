@@ -68,6 +68,8 @@ const NavItem = ({ item, isLast, isBeforeLast }) => {
               ? { userName, userFamilyName, email, profileImg }
               : item === "login"
               ? "Sign In or Sign Up with your google account. "
+              : item === "loading"
+              ? "Signing in"
               : null
           }
           isBeforeLast={isBeforeLast}

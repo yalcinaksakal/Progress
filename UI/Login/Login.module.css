@@ -1,26 +1,23 @@
 .login {
-  width: 12rem;
-  height: 3.5rem;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  background: rgb(59, 59, 59);
-  border-radius: 10px;
-  box-shadow: rgba(0, 0, 0, 0.456) 1.95px 1.95px 2.6px;
-  cursor: pointer;
-  left: 50%;
-  transition: all ease-out 0.2s;
+  justify-content: space-between;
+
+  user-select: none;
 }
 .login svg {
-  transform: translateY(0.5rem) scale(2);
-}
-.login p {
-  transform: translateY(-0.1rem);
-  color: white;
-  font-size: 1.2rem;
+  width: 8rem;
+  height: 3rem;
+  padding-top: 0.5rem;
   padding-left: 1rem;
+  cursor: pointer;
+  transition: all ease-out 0.2s;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.456) 1.95px 1.95px 2.6px;
+  background: black;
 }
 
-.login:hover {
-  background: black;
+.login svg:hover {
+  background: whitesmoke;
 }
