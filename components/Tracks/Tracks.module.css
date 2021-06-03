@@ -5,7 +5,8 @@
   border: none;
   border-radius: 5px;
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-  background: whitesmoke;
+  background: rgb(228, 238, 248);
   resize: none;
   outline: none;
+  padding: 0.5rem;
 }

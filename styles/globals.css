@@ -26,3 +26,8 @@ section {
   flex-direction: column;
   justify-content: center;
 }
+
+h3,
+p {
+  margin: 0.5rem 0;
+}
