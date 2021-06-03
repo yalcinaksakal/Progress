@@ -1,6 +1,6 @@
 import { cross } from "../../config/config";
-import Card from "../Card/Card";
-import Login from "../login/login";
+
+import Login from "../Login/Login";
 const LoginReq = () => {
   return (
     <>
