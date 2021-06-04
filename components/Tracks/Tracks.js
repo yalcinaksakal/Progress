@@ -1,4 +1,4 @@
-import { template } from "../../config/config";
+
 import Mentoring from "./Mentoring";
 import styles from "./Tracks.module.css";
 
