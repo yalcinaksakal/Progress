@@ -1,7 +1,6 @@
 import GoogleLogin from "react-google-login";
 import { CLIENT_ID } from "../../config/config";
 
-
 const Google = ({ loginStartHandler, responseHandler }) => {
   return (
     <div onClick={loginStartHandler}>
@@ -36,7 +35,8 @@ const Google = ({ loginStartHandler, responseHandler }) => {
         isSignedIn={false}
         onSuccess={responseHandler}
         onFailure={responseHandler}
-        cookiePolicy="single_host_origin"
+        cookiePolicy={"single_host_origin"}
+        
       />
     </div>
   );

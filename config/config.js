@@ -104,7 +104,7 @@ Milestone 2: Title
    Subsubsubtitle
 ...
 
-Paste or write your track's curriculum here like above.
+Paste or write your track's milestones here, like above.
 After each line there has to be a linebreak (Enter).
 Number of spaces at the begining of line defines indent of title.`;
 
